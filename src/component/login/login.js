@@ -1,16 +1,23 @@
-import React from "react";
+import React, {useCallback} from "react";
 import LoginForm from "./loginForm";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/loginRedux";
 import {NavLink} from "react-router-dom";
 import {FORGOT_PATH, REGISTRATION_PATH} from "../routes";
 
 
 const LoginPage = (props)=>{
-
-    const onSubmit = (email, password, rememberMe)=>{
-        props.login(email, password, rememberMe)
-    };
+    const dispatch=useDispatch()
+    const {success, isLoading,error}=useSelector((store)=>{
+        return store.login
+    })
+    const onSubmit = useCallback( (email, password, rememberMe)=>
+    {
+        // if(){
+        //
+        // }
+        dispatch(login(email, password, rememberMe))
+    }, [dispatch]);
 
     return (
         <div>
@@ -21,10 +28,10 @@ const LoginPage = (props)=>{
         </div>
     )
 };
-const mapStateToProps = (state)=>({
-    email: state.login.email,
-    password: state.login.password,
-    rememberMe: state.login.rememberMe,
-});
+// const mapStateToProps = (state)=>({
+//     email: state.login.email,
+//     password: state.login.password,
+//     rememberMe: state.login.rememberMe,
+// });
 
-export default connect(mapStateToProps, {login})(LoginPage)
+export default LoginPage
