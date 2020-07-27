@@ -1,15 +1,10 @@
 import {api} from "../api/api";
 
 const initialState = {
-    email: null,
-    password: null,
-    rememberMe: null
-    // name: null,
-    // isAdmin: false,
-    // rememberMe: false,
-    // token: null,
-    // tokenDeathTime: null,
-    // success: false
+
+    success: false,
+    isLoading: false,
+    error: ''
 };
 
 const LoginReducer = (state=initialState, action)=>{
@@ -17,26 +12,30 @@ const LoginReducer = (state=initialState, action)=>{
        case 'LOGIN_SUCCESS':
            return {
                ...state,
-               email: action.email,
-               password: action.password,
-               rememberMe: action.rememberMe
+               success: true,
+              isLoading: false,
+               error: ''
            };
        default: return state
    }
 };
 
-const loginSuccess=(email, password, rememberMe)=>(
+const loginSuccess=()=>(
     {
         type: 'LOGIN_SUCCESS',
-        email,
-        password,
-        rememberMe
     }
 );
 
+
+
 export const login = (email, password, rememberMe)=>(dispatch)=>{
+    //dispatch(loading())
     api.login(email, password, rememberMe).then(res=>{
-        dispatch(loginSuccess(res.data.email, res.data,password, res.data.rememberMe))
+
+        dispatch(loginSuccess())
+    }
+    ).catch(error => {
+       // dispatch(error(error))
     })
 };
 

@@ -5,7 +5,7 @@ import Header from "./component/header/header";
 import Routes from "./component/routes";
 
 const App = (props) => {
-    const x=1
+
     return (
         <div>
             <HashRouter>
