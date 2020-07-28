@@ -1,10 +1,10 @@
 import {api} from "../api/api";
 
 const initialState = {
-
     success: false,
     isLoading: false,
-    error: ''
+    error: '',
+    isDisabled: false
 };
 
 const LoginReducer = (state=initialState, action)=>{
@@ -13,8 +13,24 @@ const LoginReducer = (state=initialState, action)=>{
            return {
                ...state,
                success: true,
-              isLoading: false,
-               error: ''
+               // isLoading: action.isLoading,
+               // error: action.value,
+               // isDisabled: action.isDisabled
+           };
+       case 'LOGIN_LOADING_SWITCHING':
+           return {
+               ...state,
+               isLoading: action.isLoading,
+           };
+       case 'LOGIN_DISABLED_SWITCHING':
+           return {
+               ...state,
+               isDisabled: action.isDisabled
+           };
+       case 'LOGIN_SET_ERROR':
+           return {
+               ...state,
+               error: action.value
            };
        default: return state
    }
@@ -25,17 +41,37 @@ const loginSuccess=()=>(
         type: 'LOGIN_SUCCESS',
     }
 );
+const loading = (isLoading)=>(
+    {
+        type: 'LOGIN_LOADING_SWITCHING',
+        isLoading
+    }
+);
+const disabled = (isDisabled)=>(
+    {
+        type: 'LOGIN_DISABLED_SWITCHING',
+        isDisabled
+    }
+);
 
-
+const error = (value) => ({
+    type: 'LOGIN_SET_ERROR',
+    value
+})
 
 export const login = (email, password, rememberMe)=>(dispatch)=>{
-    //dispatch(loading())
+    //dispatch(loading(true))
+    //dispatch(disabled(true))
     api.login(email, password, rememberMe).then(res=>{
 
         dispatch(loginSuccess())
+       // dispatch(loading(false))
+        //dispatch(disabled(false))
     }
     ).catch(error => {
        // dispatch(error(error))
+        //dispatch(loading(false))
+        //dispatch(disabled(false))
     })
 };
 

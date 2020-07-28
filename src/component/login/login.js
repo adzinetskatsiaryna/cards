@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import LoginForm from "./loginForm";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/loginRedux";
 import {NavLink} from "react-router-dom";
 import {FORGOT_PATH, REGISTRATION_PATH} from "../routes";
@@ -8,7 +8,7 @@ import {FORGOT_PATH, REGISTRATION_PATH} from "../routes";
 
 const LoginPage = (props)=>{
     const dispatch=useDispatch()
-    const {success, isLoading,error}=useSelector((store)=>{
+    const {success, isLoading,error, isDisabled}=useSelector((store)=>{
         return store.login
     })
 

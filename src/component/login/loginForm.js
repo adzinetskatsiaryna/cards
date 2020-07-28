@@ -5,9 +5,9 @@ import "../../App.css";
 
 const LoginForm = React.memo((props)=>{
 
-    const [email, setEmail]=useState('null');
-    const [password, setPassword]=useState('null');
-    const [rememberMe, setRememberMe]=useState('true');
+    const [email, setEmail]=useState('');
+    const [password, setPassword]=useState('');
+    const [rememberMe, setRememberMe]=useState(true);
 
     const onChangeEmail = (e)=>{
         setEmail(e.currentTarget.value)
