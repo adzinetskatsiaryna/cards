@@ -10,5 +10,11 @@ export const api = {
             password: password,
             rememberMe: rememberMe
         })
+    },
+    registration(email, password){
+        return instance.post(`/auth/register` , {
+            email: email,
+            password: password
+        })
     }
 }
