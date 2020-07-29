@@ -4,16 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/loginRedux";
 import {NavLink, Redirect} from "react-router-dom";
 import {FORGOT_PATH, PROFILE_PATH, REGISTRATION_PATH} from "../routes";
-import preloader from '../../images/preloader.svg';
-
-
+import Preloader from "../common/preloader";
 
 const LoginPage = (props)=>{
-    const dispatch=useDispatch()
+    const dispatch=useDispatch();
     const {success, isLoading,error, isDisabled}=useSelector((store)=>{
         return store.login
-    })
-
+    });
     const onSubmit = useCallback( (email, password, rememberMe)=>
     {
         // if(){
@@ -24,16 +21,15 @@ const LoginPage = (props)=>{
 
 
 
-
-     if(success){
-         return <Redirect to={PROFILE_PATH}/>
-     }
-
-    return (
-        isLoading ? <div><img src={preloader}/> </div>:
+   if (isLoading){ return <Preloader/> }
+    if(success){
+        return <Redirect to={PROFILE_PATH}/>
+    }
+    //if(error){return <div>{error}</div>}
+   return (
         <div>
            <h2> LOGIN </h2>
-            <LoginForm {...props} onSubmit ={onSubmit} disabled={isDisabled} />
+            <LoginForm {...props} onSubmit ={onSubmit} />
             <NavLink to={FORGOT_PATH}>Forgot Password</NavLink>
             <NavLink to={REGISTRATION_PATH}>Registration</NavLink>
         </div>

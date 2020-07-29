@@ -17,11 +17,15 @@ export const api = {
             password: password
         })
     },
-    forgotRegistration(email){
-        return instance.post(`auth/forgot`,
-            {email:email,
-                html1: "<a href='http://localhost:3000/#/setNewPassword/",
-                html2: " >reset-password-link</a>"
-            })
+    forgot(email){
+        return instance.post(`/auth/forgot`, {
+            email: email,
+            html1: "<a href='http://localhost:3000/#/setNewPassword/",
+            html2: "'>fdsfdsfdsf</a>"
+        })
+
+    },
+    authMe(token){
+        return instance.post( `/auth/me`, {token: token})
     }
 }

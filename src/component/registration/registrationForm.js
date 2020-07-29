@@ -35,7 +35,8 @@ class RegistrationForm extends React.Component{
 
     state = {
         password: '',
-        emailError:''
+        password2:"",
+        passwordError: '',
     };
 
     onChangePassword = (e)=>{
@@ -44,44 +45,40 @@ class RegistrationForm extends React.Component{
         })
     };
 
-    onChangeEmail = (e) => {
-        this.props.changeEmail(e.currentTarget.value);
-        //
-        // if (e.currentTarget.value === this.props.email) {
-        //     this.props.setError(this.props.error)
-        // }
+    onChangeRepeatPassword = (e)=>{
+        this.setState({
+            password2: e.currentTarget.value
+        })
     };
 
-
-    onChangeRepeatPassword = (e)=>{
-        if(this.state.password===e.currentTarget.value){
-            this.setState({
-                password: e.currentTarget.value
-            })
+    onChangeEmail=(e)=>{
+       this.props.changeEmail(e.currentTarget.value)
+    };
+    onPasswordSubmit=()=>{
+        if(this.state.password === this.state.password2){
+            this.props.onSubmit(this.props.email, this.state.password)
         }else {
             this.setState({
-                password: 'add correct password'
+                passwordError: 'uncorrected password'
             })
         }
-    }
+    };
 
     render() {
+
         return (
             <div>
                 <div>
                     <input type={'email'} value={this.props.email} name={'email'} placeholder={'email'} onChange={this.onChangeEmail}/>
                     <input type={'password'} value={this.state.password} name={'password'} placeholder={'add password'}
                            onChange={this.onChangePassword}/>
-                    <input type={'password'} value={this.state.password} name={'password'}
+                    <input type={'password'} value={this.state.password2} name={'password'}
                            placeholder={'repeat password'} onChange={this.onChangeRepeatPassword}/>
-                    <button onClick={()=>this.props.onSubmit(this.props.email, this.state.password)}>registration</button>
+                    <button onClick={this.onPasswordSubmit} disabled={this.props.isDisabled}>registration</button>
                 </div>
-                <div>
-                    <span>error:{this.props.error}</span>
-                </div>
-
+                <div><span>{this.state.passwordError}</span></div>
+                <div><span>{this.props.error}</span></div>
             </div>
-
         )
     }
 };

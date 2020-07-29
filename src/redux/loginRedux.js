@@ -4,7 +4,7 @@ const initialState = {
     success: false,
     isLoading: false,
     error: '',
-    isDisabled: false
+    isDisabled: false,
 };
 
 const LoginReducer = (state=initialState, action)=>{
@@ -13,9 +13,6 @@ const LoginReducer = (state=initialState, action)=>{
            return {
                ...state,
                success: true,
-               // isLoading: action.isLoading,
-               // error: action.value,
-               // isDisabled: action.isDisabled
            };
        case 'LOGIN_LOADING_SWITCHING':
            return {
@@ -32,6 +29,7 @@ const LoginReducer = (state=initialState, action)=>{
                ...state,
                error: action.value
            };
+
        default: return state
    }
 };
@@ -41,36 +39,41 @@ const loginSuccess=()=>(
         type: 'LOGIN_SUCCESS',
     }
 );
-export const loading = (isLoading)=>(
+const loading = (isLoading)=>(
     {
         type: 'LOGIN_LOADING_SWITCHING',
         isLoading
     }
 );
-export const disabled = (isDisabled)=>(
+const disabled = (isDisabled)=>(
     {
         type: 'LOGIN_DISABLED_SWITCHING',
         isDisabled
     }
 );
 
-export const loginError = (value) => ({
+const loginError = (value) => ({
     type: 'LOGIN_SET_ERROR',
     value
-})
+});
 
-export const login = (email, password, rememberMe) => (dispatch) => {
-    dispatch(loading(true))
-    dispatch(disabled(true))
-    api.login(email, password, rememberMe).then(res => {
-            dispatch(loginSuccess())
-            dispatch(loading(false))
-            dispatch(disabled(false))
+
+export const login = (email, password, rememberMe)=>(dispatch)=>{
+    dispatch(disabled(true));
+    dispatch(loading(true));
+    api.login(email, password, rememberMe).then(res=>{
+        if(res.success===true){
+            localStorage.setItem('token', JSON.stringify(res.token))
         }
-    ).catch(error => {
-        dispatch(loginError(error))
-        dispatch(loading(false))
-        dispatch(disabled(false))
+       // let token = localStorage.getItem('token');
+        dispatch(loginSuccess());
+        dispatch(disabled(false));
+        dispatch(loading(false));
+
+    }).catch(error => {
+        dispatch(loginError(error.error));
+        dispatch(disabled(false));
+        dispatch(loading(false));
     })
 };
 

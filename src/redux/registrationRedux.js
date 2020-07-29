@@ -2,10 +2,10 @@ import {api} from "../api/api";
 
 const initialState = {
     // addedUser: {
-    //     //     email: "",
-    //     //     isAdmin: false,
-    //     // },
-    email:'',
+    //     email: '',
+    //     isAdmin: false,
+    // },
+    email: '',
     success: false,
     error:'',
     isLoading: false,
@@ -17,12 +17,8 @@ const RegistrationReducer = (state=initialState, action)=>{
        case 'REGISTRATION_SUCCESS':
            return {
                ...state,
-               email:action.email,
                success: true,
-               // addedUser: {...state.addedUser,
-               // email: action.email,
-               //     isAdmin: false
-               // }
+               email: action.email
            };
        case 'REGISTRATION_LOADING_SWITCHING':
            return {
@@ -34,6 +30,7 @@ const RegistrationReducer = (state=initialState, action)=>{
                ...state,
                isDisabled: action.isDisabled
            };
+           debugger
        case 'REGISTRATION_ERROR':
            return {
                ...state,
@@ -50,34 +47,39 @@ export const registrationSuccess = (email)=>(
     }
 );
 
-export const loading = (isLoading)=>(
+const loading = (isLoading)=>(
     {
         type: 'REGISTRATION_LOADING_SWITCHING',
         isLoading
     }
 );
- export const disabled = (isDisabled)=>({
+const disabled = (isDisabled)=>({
     type: 'REGISTRATION_DISABLED_SWITCHING',
     isDisabled
 });
-export const registractionError = (error)=>({
+export const registrationError = (value)=>({
     type: 'REGISTRATION_ERROR',
-    error
-}
-)
+    value
+});
 
 export const registration = (email, password)=>(dispatch)=>{
-    dispatch(loading(true))
-   dispatch(disabled(true))
+    dispatch(disabled(true));
+    dispatch(loading(true));
         api.registration(email, password).then(res=>{
-            dispatch(registrationSuccess(res.data.email))
-           dispatch(loading(false))
-           dispatch(disabled(false))
+            dispatch(registrationSuccess(res.email));
+            dispatch(disabled(false));
+            dispatch(loading(false));
         })
             .catch(error=>{
-                dispatch(registractionError(error))
-               dispatch(loading(false))
-              // dispatch(disabled(false))
+                console.log(error.response)
+if(error.response.status===500){
+    dispatch(registrationError('this user is already registred'))
+}else {
+    dispatch(registrationError(error.response.data.error))
+}
+
+                dispatch(disabled(false));
+                dispatch(loading(false));
             })
 }
 

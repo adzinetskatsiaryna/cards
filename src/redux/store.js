@@ -3,15 +3,14 @@ import LoginReducer from "./loginRedux";
 import RegistrationReducer from "./registrationRedux";
 import SettingsReducer from "./settingsReducer";
 import thunk from "redux-thunk";
-import ForgorPasswordReducer from "./forgotReducer";
-
+import ForgotReducer from "./forgotReducer";
 
 
 const reducer = combineReducers({
     login: LoginReducer,
     registration: RegistrationReducer,
     settings: SettingsReducer,
-    forgot: ForgorPasswordReducer
+    forgot: ForgotReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));
