@@ -2,15 +2,15 @@ import React, {useCallback} from "react";
 import LoginForm from "./loginForm";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/loginRedux";
-import {NavLink} from "react-router-dom";
-import {FORGOT_PATH, REGISTRATION_PATH} from "../routes";
-
+import {NavLink, Redirect} from "react-router-dom";
+import {FORGOT_PATH, PROFILE_PATH, REGISTRATION_PATH} from "../routes";
+import Preloader from "../common/preloader";
 
 const LoginPage = (props)=>{
-    const dispatch=useDispatch()
+    const dispatch=useDispatch();
     const {success, isLoading,error, isDisabled}=useSelector((store)=>{
         return store.login
-    })
+    });
     const onSubmit = useCallback( (email, password, rememberMe)=>
     {
         // if(){
@@ -19,19 +19,24 @@ const LoginPage = (props)=>{
         dispatch(login(email, password, rememberMe))
     }, [dispatch]);
 
-    return (
+
+
+   if (isLoading){ return <Preloader/> }
+    if(success){
+        return <Redirect to={PROFILE_PATH}/>
+    }
+    //if(error){return <div>{error}</div>}
+   return (
         <div>
            <h2> LOGIN </h2>
-            <LoginForm {...props} onSubmit ={onSubmit} />
+            <LoginForm {...props} onSubmit ={onSubmit} isDisabled={isDisabled}/>
             <NavLink to={FORGOT_PATH}>Forgot Password</NavLink>
             <NavLink to={REGISTRATION_PATH}>Registration</NavLink>
+            {/*<div>*/}
+            {/*    {isLoading}?<Preloader/>:{success}<Redirect to={PROFILE_PATH}/>?{error}:<div>Error</div>*/}
+            {/*</div>*/}
         </div>
     )
 };
-// const mapStateToProps = (state)=>({
-//     email: state.login.email,
-//     password: state.login.password,
-//     rememberMe: state.login.rememberMe,
-// });
 
 export default LoginPage

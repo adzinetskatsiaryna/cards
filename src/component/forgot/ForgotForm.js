@@ -1,14 +1,18 @@
-import React from "react";
-import Input from "../common/input";
-import Button from "../common/button";
+import React, {useState} from "react";
 
 const ForgotForm = (props) => {
+    const [email, setEmail]=useState('');
+
+    const changeForgotEmail = (e)=>{
+        setEmail(e.currentTarget.value)
+    };
+
     return (
         <div>
-            <form>
-                <Input/>
-                <Button/>
-            </form>
+            <div>
+                <input type={'email'} placeholder={'add email'} value={email} onChange={changeForgotEmail} />
+                <button onClick={()=>{props.onSubmitForgot(email)}}>Enter</button>
+            </div>
         </div>
     )
 };
