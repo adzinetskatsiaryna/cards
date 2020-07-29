@@ -34,7 +34,8 @@ import React, {useState} from "react";
 class RegistrationForm extends React.Component{
 
     state = {
-        password: ''
+        password: '',
+        emailError:''
     };
 
     onChangePassword = (e)=>{
@@ -42,6 +43,15 @@ class RegistrationForm extends React.Component{
             password: e.currentTarget.value
         })
     };
+
+    onChangeEmail = (e) => {
+        this.props.changeEmail(e.currentTarget.value);
+        //
+        // if (e.currentTarget.value === this.props.email) {
+        //     this.props.setError(this.props.error)
+        // }
+    };
+
 
     onChangeRepeatPassword = (e)=>{
         if(this.state.password===e.currentTarget.value){
@@ -58,15 +68,20 @@ class RegistrationForm extends React.Component{
     render() {
         return (
             <div>
-                <form>
-                    <input type={'email'} value={this.props.email} name={'email'} placeholder={'email'}/>
+                <div>
+                    <input type={'email'} value={this.props.email} name={'email'} placeholder={'email'} onChange={this.onChangeEmail}/>
                     <input type={'password'} value={this.state.password} name={'password'} placeholder={'add password'}
                            onChange={this.onChangePassword}/>
                     <input type={'password'} value={this.state.password} name={'password'}
                            placeholder={'repeat password'} onChange={this.onChangeRepeatPassword}/>
                     <button onClick={()=>this.props.onSubmit(this.props.email, this.state.password)}>registration</button>
-                </form>
+                </div>
+                <div>
+                    <span>error:{this.props.error}</span>
+                </div>
+
             </div>
+
         )
     }
 };

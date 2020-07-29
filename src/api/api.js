@@ -16,5 +16,12 @@ export const api = {
             email: email,
             password: password
         })
+    },
+    forgotRegistration(email){
+        return instance.post(`auth/forgot`,
+            {email:email,
+                html1: "<a href='http://localhost:3000/#/setNewPassword/",
+                html2: " >reset-password-link</a>"
+            })
     }
 }

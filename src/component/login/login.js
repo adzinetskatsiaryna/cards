@@ -2,8 +2,10 @@ import React, {useCallback} from "react";
 import LoginForm from "./loginForm";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/loginRedux";
-import {NavLink} from "react-router-dom";
-import {FORGOT_PATH, REGISTRATION_PATH} from "../routes";
+import {NavLink, Redirect} from "react-router-dom";
+import {FORGOT_PATH, PROFILE_PATH, REGISTRATION_PATH} from "../routes";
+import preloader from '../../images/preloader.svg';
+
 
 
 const LoginPage = (props)=>{
@@ -20,10 +22,18 @@ const LoginPage = (props)=>{
         dispatch(login(email, password, rememberMe))
     }, [dispatch]);
 
+
+
+
+     if(success){
+         return <Redirect to={PROFILE_PATH}/>
+     }
+
     return (
+        isLoading ? <div><img src={preloader}/> </div>:
         <div>
            <h2> LOGIN </h2>
-            <LoginForm {...props} onSubmit ={onSubmit} />
+            <LoginForm {...props} onSubmit ={onSubmit} disabled={isDisabled} />
             <NavLink to={FORGOT_PATH}>Forgot Password</NavLink>
             <NavLink to={REGISTRATION_PATH}>Registration</NavLink>
         </div>

@@ -41,37 +41,36 @@ const loginSuccess=()=>(
         type: 'LOGIN_SUCCESS',
     }
 );
-const loading = (isLoading)=>(
+export const loading = (isLoading)=>(
     {
         type: 'LOGIN_LOADING_SWITCHING',
         isLoading
     }
 );
-const disabled = (isDisabled)=>(
+export const disabled = (isDisabled)=>(
     {
         type: 'LOGIN_DISABLED_SWITCHING',
         isDisabled
     }
 );
 
-const error = (value) => ({
+export const loginError = (value) => ({
     type: 'LOGIN_SET_ERROR',
     value
 })
 
-export const login = (email, password, rememberMe)=>(dispatch)=>{
-    //dispatch(loading(true))
-    //dispatch(disabled(true))
-    api.login(email, password, rememberMe).then(res=>{
-
-        dispatch(loginSuccess())
-       // dispatch(loading(false))
-        //dispatch(disabled(false))
-    }
+export const login = (email, password, rememberMe) => (dispatch) => {
+    dispatch(loading(true))
+    dispatch(disabled(true))
+    api.login(email, password, rememberMe).then(res => {
+            dispatch(loginSuccess())
+            dispatch(loading(false))
+            dispatch(disabled(false))
+        }
     ).catch(error => {
-       // dispatch(error(error))
-        //dispatch(loading(false))
-        //dispatch(disabled(false))
+        dispatch(loginError(error))
+        dispatch(loading(false))
+        dispatch(disabled(false))
     })
 };
 

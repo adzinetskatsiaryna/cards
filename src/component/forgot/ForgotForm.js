@@ -5,10 +5,8 @@ import Button from "../common/button";
 const ForgotForm = (props) => {
     return (
         <div>
-            <form>
-                <Input/>
-                <Button/>
-            </form>
+                <input type="text" placeholder={"enter your email"} value={props.email} name={'email'}/>
+                <button> Enter</button>
         </div>
     )
 };

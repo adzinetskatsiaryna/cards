@@ -1,10 +1,11 @@
 import {api} from "../api/api";
 
 const initialState = {
-    addedUser: {
-        email: null,
-        isAdmin: false,
-    },
+    // addedUser: {
+    //     //     email: "",
+    //     //     isAdmin: false,
+    //     // },
+    email:'',
     success: false,
     error:'',
     isLoading: false,
@@ -16,11 +17,12 @@ const RegistrationReducer = (state=initialState, action)=>{
        case 'REGISTRATION_SUCCESS':
            return {
                ...state,
+               email:action.email,
                success: true,
-               addedUser: {...state.addedUser,
-               email: action.email,
-                   isAdmin: false
-               }
+               // addedUser: {...state.addedUser,
+               // email: action.email,
+               //     isAdmin: false
+               // }
            };
        case 'REGISTRATION_LOADING_SWITCHING':
            return {
@@ -41,39 +43,40 @@ const RegistrationReducer = (state=initialState, action)=>{
        default: return state
    }
 };
-const registrationSuccess = (email)=>(
+export const registrationSuccess = (email)=>(
     {
         type: 'REGISTRATION_SUCCESS',
         email
     }
 );
 
-const loading = (isLoading)=>(
+export const loading = (isLoading)=>(
     {
         type: 'REGISTRATION_LOADING_SWITCHING',
         isLoading
     }
 );
-const disabled = (isDisabled)=>({
+ export const disabled = (isDisabled)=>({
     type: 'REGISTRATION_DISABLED_SWITCHING',
     isDisabled
 });
-const error = (value)=>({
+export const registractionError = (error)=>({
     type: 'REGISTRATION_ERROR',
-    value
-});
+    error
+}
+)
 
 export const registration = (email, password)=>(dispatch)=>{
-    //dispatch(loading(true))
-   // dispatch(disabled(true))
+    dispatch(loading(true))
+   dispatch(disabled(true))
         api.registration(email, password).then(res=>{
             dispatch(registrationSuccess(res.data.email))
-           // dispatch(loading(false))
-           // dispatch(disabled(false))
+           dispatch(loading(false))
+           dispatch(disabled(false))
         })
             .catch(error=>{
-                //dispatch(error(error.message))
-               // dispatch(loading(false))
+                dispatch(registractionError(error))
+               dispatch(loading(false))
               // dispatch(disabled(false))
             })
 }
