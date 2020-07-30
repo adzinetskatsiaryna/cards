@@ -29,16 +29,11 @@ const LoginPage = (props)=>{
    return (
         <div>
            <h2> LOGIN </h2>
-            <LoginForm {...props} onSubmit ={onSubmit} />
+            <LoginForm {...props} onSubmit ={onSubmit} isDisabled={isDisabled} error ={error} />
             <NavLink to={FORGOT_PATH}>Forgot Password</NavLink>
             <NavLink to={REGISTRATION_PATH}>Registration</NavLink>
         </div>
     )
 };
-// const mapStateToProps = (state)=>({
-//     email: state.login.email,
-//     password: state.login.password,
-//     rememberMe: state.login.rememberMe,
-// });
 
 export default LoginPage

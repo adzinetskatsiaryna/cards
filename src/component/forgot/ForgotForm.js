@@ -7,11 +7,15 @@ const ForgotForm = (props) => {
         setEmail(e.currentTarget.value)
     };
 
+    // const onHandlerSubmitForgot = ()=>{
+    //     props.onSubmitForgot(email)
+    // }
+
     return (
         <div>
             <div>
                 <input type={'email'} placeholder={'add email'} value={email} onChange={changeForgotEmail} />
-                <button onClick={()=>{props.onSubmitForgot(email)}}>Enter</button>
+                <button onClick={()=>{props.onSubmitForgot(email)}} disabled={props.disabled}>Enter</button>
             </div>
         </div>
     )

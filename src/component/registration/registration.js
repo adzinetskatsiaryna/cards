@@ -19,7 +19,7 @@ const RegistrationPage = (props) => {
 
     const setError = (error)=>{
         props.registrationError(error)
-    }
+    };
 
     if (props.isLoading) {
         return <Preloader/>
