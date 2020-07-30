@@ -8,6 +8,7 @@ import Preloader from "../common/preloader";
 
 
 const RegistrationPage = (props) => {
+
     const onSubmit = (email, password) => {
         props.registration(email, password)
     };
@@ -50,4 +51,4 @@ const mapStateToProps = (state)=>({
     error: state.registration.error
 });
 
-export default connect(mapStateToProps, {registration}) (RegistrationPage)
+export default connect(mapStateToProps, {registration, registrationError,registrationSuccess }) (RegistrationPage)

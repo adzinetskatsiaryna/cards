@@ -68,7 +68,7 @@ class RegistrationForm extends React.Component{
 
         return (
             <div>
-                <div>
+                <div className="registrationWrapper">
                     <input type={'email'} value={this.props.email} name={'email'} placeholder={'email'} onChange={this.onChangeEmail}/>
                     <input type={'password'} value={this.state.password} name={'password'} placeholder={'add password'}
                            onChange={this.onChangePassword}/>
