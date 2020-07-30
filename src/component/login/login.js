@@ -25,16 +25,13 @@ const LoginPage = (props)=>{
     if(success){
         return <Redirect to={PROFILE_PATH}/>
     }
-    //if(error){return <div>{error}</div>}
+
    return (
         <div>
            <h2> LOGIN </h2>
-            <LoginForm {...props} onSubmit ={onSubmit} isDisabled={isDisabled}/>
+            <LoginForm {...props} onSubmit ={onSubmit} isDisabled={isDisabled} error ={error} />
             <NavLink to={FORGOT_PATH}>Forgot Password</NavLink>
             <NavLink to={REGISTRATION_PATH}>Registration</NavLink>
-            {/*<div>*/}
-            {/*    {isLoading}?<Preloader/>:{success}<Redirect to={PROFILE_PATH}/>?{error}:<div>Error</div>*/}
-            {/*</div>*/}
         </div>
     )
 };

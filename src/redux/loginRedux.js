@@ -1,4 +1,5 @@
 import {api} from "../api/api";
+import {registrationError} from "./registrationRedux";
 
 const initialState = {
     success: false,
@@ -65,13 +66,16 @@ export const login = (email, password, rememberMe)=>(dispatch)=>{
         if(res.success===true){
             localStorage.setItem('token', JSON.stringify(res.token))
         }
-       // let token = localStorage.getItem('token');
+
         dispatch(loginSuccess());
         dispatch(disabled(false));
         dispatch(loading(false));
 
     }).catch(error => {
-        dispatch(loginError(error.error));
+       // console.log(error.response);
+        if (error.response.status === 400) {
+            dispatch(loginError(error.response.data.error));
+        }
         dispatch(disabled(false));
         dispatch(loading(false));
     })

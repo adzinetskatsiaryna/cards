@@ -18,6 +18,10 @@ const LoginForm = React.memo((props)=>{
         setRememberMe(e.currentTarget.checked)
     };
 
+    const onHandleSubmit = ()=>{
+        props.onSubmit(email, password, rememberMe)
+    }
+
     return (
         <div>
             <div>
@@ -26,6 +30,7 @@ const LoginForm = React.memo((props)=>{
                <input type={'checkbox'} value={rememberMe} name={'rememberMe'} onChange={onChangeRememberMe}/>
                <button onClick={()=>props.onSubmit(email, password, rememberMe)} disabled={props.isDisabled}>login</button>
             </div>
+            <div><span>{props.error}</span></div>
         </div>
     )
 });

@@ -62,25 +62,23 @@ export const registrationError = (value)=>({
     value
 });
 
-export const registration = (email, password)=>(dispatch)=>{
+export const registration = (email, password) => (dispatch) => {
     dispatch(disabled(true));
     dispatch(loading(true));
-        api.registration(email, password).then(res=>{
-            dispatch(registrationSuccess(res.email));
+    api.registration(email, password).then(res => {
+        dispatch(registrationSuccess(res.email));
+        dispatch(disabled(false));
+        dispatch(loading(false));
+    })
+        .catch(error => {
+            if (error.response.status === 500) {
+                dispatch(registrationError('this user is already registered'))
+            } else {
+                dispatch(registrationError(error.response.data.error))
+            }
             dispatch(disabled(false));
             dispatch(loading(false));
         })
-            .catch(error=>{
-                console.log(error.response)
-if(error.response.status===500){
-    dispatch(registrationError('this user is already registred'))
-}else {
-    dispatch(registrationError(error.response.data.error))
-}
-
-                dispatch(disabled(false));
-                dispatch(loading(false));
-            })
 }
 
 export default RegistrationReducer
