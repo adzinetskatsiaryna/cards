@@ -8,7 +8,8 @@ import {login} from "../../redux/loginRedux";
 
 
 const ProfilePage = (props)=>{
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
     const {name}=useSelector((store)=>{
         return store.profile
     });
@@ -17,6 +18,12 @@ const ProfilePage = (props)=>{
        dispatch(initialized())
     }, []);
 
+    const logaut = ()=>{
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('token');
+        return ''
+    };
+
     // const kkkk= useCallback( ()=>
     // {
     //
@@ -24,13 +31,14 @@ const ProfilePage = (props)=>{
     // }, [dispatch]);
 
 
-     let token = localStorage.getItem('token');
-    // if(!token){
-    //     return <Redirect to={LOGIN_PATH} />
-    // }
+   let token = JSON.parse(localStorage.getItem('token'));
+    if(!localStorage.getItem('token')){
+        return <Redirect to={LOGIN_PATH} />
+    }
+
     return (
         <div>
-          <HeaderProfile name={name}/>
+          <HeaderProfile name={name} {...props} logaut={logaut}/>
         </div>
     )
 };

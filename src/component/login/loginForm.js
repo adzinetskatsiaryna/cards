@@ -6,7 +6,7 @@ const LoginForm = React.memo((props)=>{
 
     const [email, setEmail]=useState('');
     const [password, setPassword]=useState('');
-    const [rememberMe, setRememberMe]=useState(true);
+    const [rememberMe, setRememberMe]=useState(false);
 
     const onChangeEmail = (e)=>{
         setEmail(e.currentTarget.value)

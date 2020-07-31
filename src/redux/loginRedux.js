@@ -62,16 +62,14 @@ const loginError = (value) => ({
 export const login = (email, password, rememberMe)=>(dispatch)=>{
     dispatch(disabled(true));
     dispatch(loading(true));
-    api.login(email, password, rememberMe).then(res=>{
-        if(res.success===true){
-            localStorage.setItem('token', JSON.stringify(res.token))
-        }
-
+    api.login(email, password, rememberMe).then(response=>{
+       // localStorage.setItem('rememberMe',  res.data.rememberMe)
+        localStorage.setItem('token', JSON.stringify(response.data.token))
         dispatch(loginSuccess());
         dispatch(disabled(false));
         dispatch(loading(false));
 
-    }).catch(error => {
+    }).catch((error) => {
        // console.log(error.response);
         if (error.response.status === 400) {
             dispatch(loginError(error.response.data.error));
