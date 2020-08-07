@@ -3,8 +3,6 @@ import React from "react";
 
 const HeaderProfile = (props)=>{
 
-
-
     return(
         <div>
             <h2>PROFILE</h2>

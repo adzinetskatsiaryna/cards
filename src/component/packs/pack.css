@@ -1,0 +1,38 @@
+table {
+    width:800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: center;
+    width:100%;
+    border: 2px solid black;
+}
+
+thead button {
+    border: 0;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: inherit;
+    padding: 0.5em;
+    margin-bottom: 1px;
+}
+
+thead button.ascending::after {
+    content: '👇';
+    display: inline-block;
+    margin-left: 1em;
+}
+
+thead button.descending::after {
+    content: '☝️';
+    display: inline-block;
+    margin-left: 1em;
+}
+
+tbody td {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    text-align: center;
+}

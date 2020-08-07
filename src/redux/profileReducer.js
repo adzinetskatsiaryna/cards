@@ -1,4 +1,5 @@
 import {api} from "../api/api";
+import {loginLogautSuccess, loginSuccess} from "./loginRedux";
 
 const initialState={
     initialized: false,
@@ -12,6 +13,11 @@ const ProfileReducer = (state=initialState, action)=>{
                 ...state,
                 initialized: true
             };
+        case 'LOGAUT_SUCCESS':
+           return  {
+                ...state,
+               initialized: false,
+        };
         case 'SET_USER_NAME':
             return {
                 ...state,
@@ -31,16 +37,26 @@ const setUserData = (name)=>({
     name
 });
 
+const logautSuccess = ()=>({
+    type: 'LOGAUT_SUCCESS'
+});
+
 export const initialized = ()=>(dispatch)=>{
 
-   const token = JSON.parse(localStorage.getItem('token'));
+   const token = localStorage.getItem('token');
     api.authMe(token).then(response=>{
         dispatch(initializedSuccess());
         dispatch(setUserData(response.data.name));
-        localStorage.setItem('token', JSON.stringify(response.data.token))
+        localStorage.setItem('token', response.data.token)
     }) .catch((error)=>{
-        localStorage.setItem('token', JSON.stringify(error.response.data.token))
+        localStorage.setItem('token', error.response.data.token)
     })
+};
+
+export const logaut = ()=>(dispatch)=>{
+    localStorage.removeItem('token');
+    dispatch(loginLogautSuccess());
+    dispatch(logautSuccess());
 };
 
 export default ProfileReducer
