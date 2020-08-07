@@ -4,7 +4,6 @@ import {
     deletePack,
     setCurrentPage,
     setPacks,
-    setPageCount,
     setPageCountSuccess, setSortPacks,
     updatePack
 } from "../../redux/packsReducer";
@@ -62,7 +61,7 @@ const PacksPage = (props) => {
     });
 
     //сортировка
-    const {items, requestSort, sortConfig} = useSortableData(cardPacks);
+    const { requestSort, sortConfig} = useSortableData(cardPacks);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
@@ -153,7 +152,7 @@ const PacksPage = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                {items.map((p, i) => {
+                {cardPacks.map((p, i) => {
                     return (<tr key={p._id} id={p._id}>
                         <td>{p.name}</td>
                         <td>{p.grade}</td>

@@ -116,8 +116,8 @@ const updatePackSuccess = (packId, obj) => ({
 
 export const setPacks = () => (dispatch, getState) => {
     const token = localStorage.getItem('token');
-    const {pageCount, page} = getState().packs;
-    api.getPacks(page, pageCount, token)
+    const {pageCount, page,packName,sortPack} = getState().packs;
+    api.getPacks(page, pageCount, token,packName,sortPack)
         .then(res => {
             dispatch(setCurrentPage(page));
             dispatch(setPacksSuccess(res.data.cardPacks));
