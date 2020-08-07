@@ -38,10 +38,7 @@ export const api = {
     //packs
 
     getPacks(page, pageCount, token, packName, sortPacks){
-        debugger
         return instance.get(`/cards/pack?page=${page}&pageCount=${pageCount}&token=${token}&packName=${packName}&sortPacks=${sortPacks}`)
-        //return instance.get(`/cards/pack?token=${token}`)
-
     },
     addPack(cardsPack, token){
         return instance.post(`/cards/pack `, {cardsPack:cardsPack, token: token}).then(res=>res.data)
