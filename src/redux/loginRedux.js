@@ -6,7 +6,6 @@ const initialState = {
     isLoading: false,
     error: '',
     isDisabled: false,
-    isAuth:false
 };
 
 const LoginReducer = (state=initialState, action)=>{
@@ -16,11 +15,6 @@ const LoginReducer = (state=initialState, action)=>{
                ...state,
                success: true,
            };
-       case 'LOGIN_LOGAUT_CUCCESS':
-           return {
-           ...state,
-               success:false
-       };
        case 'LOGIN_LOADING_SWITCHING':
            return {
                ...state,
@@ -41,24 +35,18 @@ const LoginReducer = (state=initialState, action)=>{
    }
 };
 
-export const loginSuccess=()=>(
+const loginSuccess=()=>(
     {
         type: 'LOGIN_SUCCESS',
     }
 );
-export const loginLogautSuccess = () => (
-    {
-        type: 'LOGIN_LOGAUT_CUCCESS',
-    }
-    );
-
-const loading = (isLoading) => (
+const loading = (isLoading)=>(
     {
         type: 'LOGIN_LOADING_SWITCHING',
         isLoading
     }
 );
-const disabled = (isDisabled) => (
+const disabled = (isDisabled)=>(
     {
         type: 'LOGIN_DISABLED_SWITCHING',
         isDisabled
@@ -74,13 +62,15 @@ const loginError = (value) => ({
 export const login = (email, password, rememberMe)=>(dispatch)=>{
     dispatch(disabled(true));
     dispatch(loading(true));
-
-    api.login(email, password, rememberMe).then(response=>{
-         localStorage.setItem('token',  response.data.token)
+    api.login(email, password, rememberMe).then(res=>{
+        if(res.success===true){
+            localStorage.setItem('token', JSON.stringify(res.token))
+        }
 
         dispatch(loginSuccess());
         dispatch(disabled(false));
         dispatch(loading(false));
+
     }).catch(error => {
        // console.log(error.response);
         if (error.response.status === 400) {
@@ -90,7 +80,5 @@ export const login = (email, password, rememberMe)=>(dispatch)=>{
         dispatch(loading(false));
     })
 };
-
-
 
 export default LoginReducer

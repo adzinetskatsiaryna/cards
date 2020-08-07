@@ -1,9 +1,8 @@
 import {api} from "../api/api";
-import {loginLogautSuccess, loginSuccess} from "./loginRedux";
 
 const initialState={
     initialized: false,
-    name:"",
+    name: null,
 
 }
 
@@ -13,12 +12,6 @@ const ProfileReducer = (state=initialState, action)=>{
             return{
                 ...state,
                 initialized: true
-            };
-
-        case "LOGAUT_SUCCESS":
-            return {
-                ...state,
-                initialized: false
             };
         case 'SET_USER_NAME':
             return {
@@ -34,29 +27,23 @@ const initializedSuccess = ()=>(
         type: 'INITIALIZED_SUCCESS'
     }
 );
-
-const logoutSuccess=()=>(
-    {
-    type:"LOGAUT_SUCCESS"
-});
-
 const setUserData = (name)=>({
     type: 'SET_USER_NAME',
-   name,
-
+    name
 });
 
-export const initialized = ()=>(dispatch)=>{
-   const token = localStorage.getItem('token');
-    api.authMe(token).then(response=>{
+export const initialized = ()=>(dispatch)=> {
+
+    const token = JSON.parse(localStorage.getItem('token'));
+    api.authMe(token).then(response => {
         dispatch(initializedSuccess());
-        dispatch(setUserData(response.data.name))
-        localStorage.setItem('token',response.data.token)
+        dispatch(setUserData(response.data.name));
+        localStorage.setItem('token', JSON.stringify(response.data.token))
+    }).catch((error) => {
+        localStorage.setItem('token', JSON.stringify(error.response.data.token))
     })
-        .catch( (error)=> {
-            localStorage.setItem('token',error.response.data.token)
-        } )
 };
+
 
 
 export const logout =()=>(dispatch)=>{

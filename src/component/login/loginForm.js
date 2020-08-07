@@ -1,65 +1,36 @@
 import React, {useState} from "react";
 import Input from "../common/input";
 import Button from "../common/button";
-import s from './login.module.css';
+
 const LoginForm = React.memo((props)=>{
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
-    const [emailError, setEmailError] = useState( 'Incorrect email ');
-    const [passwordError, setPasswordError] = useState('the number of simbols should be more then 7');
+    const [email, setEmail]=useState('');
+    const [password, setPassword]=useState('');
+    const [rememberMe, setRememberMe]=useState(true);
 
-
-    // const emailValidate = () => {
-    //     if (!email.includes('@')) {    //
-    //         setEmailError(emailError)
-    //     }
-    //     if (password.length < 8) {
-    //         setPasswordError(passwordError)
-    //     }
-    // }
-
-
-    const onChangeEmail = (e) => {
-        if (!email.includes('@')) {
-            setEmailError(emailError)
-        }
-        setEmail(e.currentTarget.value);
-
+    const onChangeEmail = (e)=>{
+        setEmail(e.currentTarget.value)
     };
-
-    const onChangePassword = (e) => {
-        setPassword(e.currentTarget.value);
-        if (password.length < 8) {
-            setPasswordError(passwordError)
-        }
+    const onChangePassword=(e)=>{
+        setPassword(e.currentTarget.value)
     };
-
-    const onChangeRememberMe = (e) => {
+    const onChangeRememberMe = (e)=>{
         setRememberMe(e.currentTarget.checked)
     };
 
-    const onHandleSubmit = () => {
-       // validate()
+    const onHandleSubmit = ()=>{
         props.onSubmit(email, password, rememberMe)
     }
 
-
     return (
-
         <div>
             <div>
                <input type={'email'} placeholder={'email'} value={email} name={'email'} onChange={onChangeEmail}/>
-              <div><span className={s.error_message}>{emailError}</span></div>
                <input type={'password'} placeholder={'password'} value={password} name={'password'} onChange={onChangePassword}/>
-              <div><span className={ s.error_message}>{passwordError}</span></div>
                <input type={'checkbox'} value={rememberMe} name={'rememberMe'} onChange={onChangeRememberMe}/>
-               <button onClick={onHandleSubmit} disabled={props.isDisabled}>login</button>
+               <button onClick={()=>props.onSubmit(email, password, rememberMe)} disabled={props.isDisabled}>login</button>
             </div>
             <div><span>{props.error}</span></div>
-
-
         </div>
     )
 });
