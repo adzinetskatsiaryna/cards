@@ -7,7 +7,8 @@ const initialState = {
     pageCount: 10,
     maxGrade: 5,
     minGrade: 0,
-    sortName: ''
+    sortName: '',
+    sortPacks: 0,
 };
 
 const PacksReducer = (state = initialState, action) => {
@@ -63,6 +64,15 @@ const PacksReducer = (state = initialState, action) => {
             return state
     }
 };
+
+export const setSortPacks = (sortPacks)=>({
+    type: 'SET_SORT_PACKS',
+    sortPacks
+});
+export const setSearchPacks = (sortName)=>({
+    type: 'SET_SEARCH_PACKS',
+    sortName
+});
 
 export const setCurrentPage = (page) => ({
     type: 'SET_CURRENT_PAGE',

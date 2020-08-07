@@ -5,7 +5,7 @@ import {
     setCurrentPage,
     setPacks,
     setPageCount,
-    setPageCountSuccess,
+    setPageCountSuccess, setSortPacks,
     updatePack
 } from "../../redux/packsReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -70,13 +70,12 @@ const PacksPage = (props) => {
         }
         return sortConfig.key === name ? sortConfig.direction : undefined;
     };
-const onClickSort =(key)=>{
-    requestSort(key)
-    let sort = sortConfig && sortConfig.direction ==='ascending' ? 1 : 0
-
-    // dispatch(setSortAC(sort+sortConfig.key))
-    dispatch(setPacks())
-}
+    const onClickSort = (key) => {
+        requestSort(key);
+        let sort = sortConfig && sortConfig.direction === 'ascending' ? 1 : 0;
+        dispatch(setSortPacks(sort+sortConfig.key));
+        dispatch(setPacks())
+    };
 
     // добавление колоды
     const onHandlerAddPack = useCallback((cardsPack) => {
@@ -112,8 +111,8 @@ const onClickSort =(key)=>{
         dispatch(setPacks())
     };
 
-    // const onSearch = (name) => {
-    //     dispatch(setPacksSearch(name))
+    // const onSearch = (sortName) => {
+    //     dispatch(setPacksSearch(sortName))
     // }
 
     return (
@@ -133,7 +132,7 @@ const onClickSort =(key)=>{
                     <th>
                         <button
                             type="button"
-                            onClick={() => ('name')}
+                            onClick={() =>onClickSort('name')}
                             className={getClassNamesFor('name')}
                         >
                             Name
@@ -142,7 +141,7 @@ const onClickSort =(key)=>{
                     <th>
                         <button
                             type="button"
-                            onClick={() => requestSort('grade')}
+                            onClick={() =>onClickSort('grade')}
                             className={getClassNamesFor('grade')}
                         >
                             Grade

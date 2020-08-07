@@ -37,8 +37,8 @@ export const api = {
 
     //packs
 
-    getPacks(page, pageCount, token){
-        return instance.get(`/cards/pack?page=${page}&pageCount=${pageCount}&token=${token}`)
+    getPacks(page, pageCount, token, packName, sortPacks){
+        return instance.get(`/cards/pack?page=${page}&pageCount=${pageCount}&token=${token}&packName=${packName}&sortPacks=${sortPacks}`)
     },
     addPack(cardsPack, token){
         return instance.post(`/cards/pack `, {cardsPack:cardsPack, token: token}).then(res=>res.data)
