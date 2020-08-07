@@ -76,37 +76,6 @@ const setPackTotalCount = (totalCount) => ({
     type: 'SET_PACK_TOTAL_COUNT',
     totalCount
 });
-<<<<<<< HEAD
-export const setCurrentPage=(page)=>(
-    {
-     type:'SET_CURRENT_PAGE',
-        page
-})
-
-export const setPageCountSuccess =(pageCount)=>(
-    {
-        type:"SET_PAGE_COUNT",
-        pageCount
-    }
-
-)
-export const addPacksSuccess=(newCardsPack)=>(
-    {type:"ADD_NEW_PACK",
-    cardsPack:newCardsPack
-    }
-)
-export const deleteCardsPackSuccess=(id)=>(
-{
-    type:'DELETE_PACK',
-   id:id
-
-})
-export const updateCardsPackAC=(id,obj)=>(
-    {
-        type:'UPDATE-PACK',
-        cardsPack_id:id,
-        obj
-})
 
 
 export  const setCountPacks=(count)=>(
@@ -115,60 +84,10 @@ export  const setCountPacks=(count)=>(
         count
 })
 
-export const setPacks=(page)=>(dispatch,getState)=>{
-    const token = localStorage.getItem('token');
-    let pageCount= getState().packs.pageCount;
-       api.getPacks(page,pageCount,token)
-         .then(res=>{
-             dispatch(setCurrentPage(page));
-             dispatch(setPacksSuccess(res.data.cardPacks));
-             dispatch(setPackTotalCount(res.data.cardPacksTotalCount));
-             dispatch(setPageCountSuccess(res.data.pageCount))
-         dispatch(setPacksSuccess(res.data.cardPacks));
-         localStorage.setItem('token',  res.data.token);
-         dispatch(setPageCount(res.data.pageCount))
-     })
-         .catch(error=>{
-             localStorage.setItem('token',  error.response.data.token);
-         })
-}
- export  const addCardPacks=(newCardsPack)=>(dispatch)=>{
-     const token = localStorage.getItem('token');
-     api.addPack(newCardsPack,token)
-         .then(response=>{
-         dispatch(addPacksSuccess(response.newCardsPack));
-         localStorage.setItem('token', response.token);
-     }).catch(error=>{
-         localStorage.setItem('token',  error.response.data.token);
-     })
- }
+// export const setPageCount = (pageCount) => (dispatch, getState) => {
+//     const token = localStorage.getItem('token');
+//     const page = getState().packs.page;
 
- export const deleteCardsPack=(id)=>(dispatch)=>{
-     const token = localStorage.getItem('token');
-     api.deletePack(id,token,)
-         .then(response=>{
-             dispatch(deleteCardsPackSuccess(id));
-             localStorage.setItem('token',  response.token);
-         }).catch(error=>{
-             localStorage.setItem('token',  error.response.data.token);
-         })
-
- }
- export const updateCardsPack=(cardsPack,obj)=>(dispatch)=>{
-     const token = localStorage.getItem('token');
-     api.updatePack(cardsPack,obj,token)
-         .then(response=>{
-         dispatch(updateCardsPackAC(cardsPack._id,obj));
-         localStorage.setItem('token',  response.token);
-         dispatch(setPacks())
-         }).catch(error=>{
-             localStorage.setItem('token',  error.response.data.token);
-         })
-     }
-export const setPageCount = (pageCount) => (dispatch, getState) => {
-    const token = localStorage.getItem('token');
-    const page = getState().packs.page;
-=======
 
 const setPacksSuccess = (cardPacks) => (
     {
@@ -200,7 +119,6 @@ const updatePackSuccess = (packId, obj) => ({
 export const setPacks = () => (dispatch, getState) => {
     const token = localStorage.getItem('token');
     const {pageCount, page} = getState().packs;
->>>>>>> remotes/origin/master
     api.getPacks(page, pageCount, token)
         .then(res => {
             dispatch(setCurrentPage(page));
