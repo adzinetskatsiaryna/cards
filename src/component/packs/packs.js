@@ -5,7 +5,7 @@ import {
     setCurrentPage,
     setPacks,
     setPageCount,
-    setPageCountSuccess, setSortPacks,
+    setPageCountSuccess, setSearchPacks, setSortPacks,
     updatePack
 } from "../../redux/packsReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -53,6 +53,7 @@ const PacksPage = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        debugger
         dispatch(setPacks())
     }, []);
 
@@ -62,7 +63,7 @@ const PacksPage = (props) => {
     });
 
     //сортировка
-    const {items, requestSort, sortConfig} = useSortableData(cardPacks);
+    const {requestSort, sortConfig} = useSortableData(cardPacks);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
@@ -111,9 +112,10 @@ const PacksPage = (props) => {
         dispatch(setPacks())
     };
 
-    // const onSearch = (sortName) => {
-    //     dispatch(setPacksSearch(sortName))
-    // }
+    const onSearch = (sortName) => {
+        dispatch(setSearchPacks(sortName))
+        dispatch(setPacks())
+    }
 
     return (
 
@@ -125,7 +127,7 @@ const PacksPage = (props) => {
                 onPageChanged={onPageChanged}
                 onPageChangedCount={onPageChangedCount}
             />
-            {/*<Search  onSearch={onSearch} />*/}
+            <Search  onSearch={onSearch} />
             <table>
                 <thead>
                 <tr>
@@ -153,7 +155,7 @@ const PacksPage = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                {items.map((p, i) => {
+                {cardPacks.map((p, i) => {
                     return (<tr key={p._id} id={p._id}>
                         <td>{p.name}</td>
                         <td>{p.grade}</td>

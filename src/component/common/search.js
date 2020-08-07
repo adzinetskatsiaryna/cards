@@ -1,18 +1,18 @@
 import React, {useState} from "react";
 
 const Search = ({onSearch})=>{
-const [name, setName]=useState('');
+const [sortName, setSortName]=useState('');
 
     const onChangeValue = (e)=>{
-        setName(e.currentTarget.value)
+        setSortName(e.currentTarget.value)
     };
     const onClickButton = ()=>{
-
+        onSearch(sortName)
     };
 
     return (
         <div>
-            <input type='text' value={name} onChange={onChangeValue} />
+            <input type='text' value={sortName} onChange={onChangeValue} />
             <button onClick={onClickButton}>search</button>
         </div>
     )

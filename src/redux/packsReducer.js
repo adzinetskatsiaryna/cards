@@ -111,18 +111,18 @@ const updatePackSuccess = (packId, obj) => ({
     obj
 });
 
-
-
-
 export const setPacks = () => (dispatch, getState) => {
     const token = localStorage.getItem('token');
-    const {pageCount, page} = getState().packs;
-    api.getPacks(page, pageCount, token)
+    const {pageCount, page, sortPacks, sortName} = getState().packs;
+    debugger
+    api.getPacks(page, pageCount, token, sortPacks, sortName)
         .then(res => {
-            dispatch(setCurrentPage(page));
             dispatch(setPacksSuccess(res.data.cardPacks));
+            dispatch(setCurrentPage(page));
             dispatch(setPackTotalCount(res.data.cardPacksTotalCount));
             dispatch(setPageCountSuccess(res.data.pageCount));
+            dispatch(setSortPacks(sortPacks));
+            dispatch(setSearchPacks(res.data.name));
             localStorage.setItem('token', res.data.token);
         }).catch(error => {
         localStorage.setItem('token', error.response.data.token)
