@@ -18,23 +18,6 @@ import Search from "../common/search";
 
 const useSortableData = (config = null) => {
     const [sortConfig, setSortConfig] = React.useState(config);
-
-    // const sortedItems = React.useMemo(() => {
-    //     let sortableItems = [...items];
-    //     if (sortConfig !== null) {
-    //         sortableItems.sort((a, b) => {
-    //             if (a[sortConfig.key] < b[sortConfig.key]) {
-    //                 return sortConfig.direction === 'ascending' ? -1 : 1;
-    //             }
-    //             if (a[sortConfig.key] > b[sortConfig.key]) {
-    //                 return sortConfig.direction === 'ascending' ? 1 : -1;
-    //             }
-    //             return 0;
-    //         });
-    //     }
-    //     return sortableItems;
-    // }, [items, sortConfig]);
-
     const requestSort = (key) => {
         let direction = 'ascending';
         if (
@@ -53,17 +36,16 @@ const PacksPage = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        debugger
         dispatch(setPacks())
-    }, []);
+    }, [])
 
 
-    const {cardPacks, page, pageCount, cardPacksTotalCount} = useSelector((store) => {
+    const {cardPacks, page, pageCount, cardPacksTotalCount,sortName} = useSelector((store) => {
         return store.packs
     });
 
-    //сортировка
-    const {items, requestSort, sortConfig} = useSortableData(cardPacks);
+   // сортировка
+    const {requestSort, sortConfig} = useSortableData(cardPacks);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {

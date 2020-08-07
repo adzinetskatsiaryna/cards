@@ -38,7 +38,6 @@ const Paginator = ({portionSize = 20, totalItemsCount, pageSize, page, onPageCha
                     setPortionNumber(portionNumber - 1)
                 }}>PREV</button>
                 }
-
                 {pages
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map((p) => {
