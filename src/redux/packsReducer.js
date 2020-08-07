@@ -131,7 +131,7 @@ export const setPacks = () => (dispatch, getState) => {
             dispatch(setCurrentPage(res.data.page));
             dispatch(setPackTotalCount(res.data.cardPacksTotalCount));
             dispatch(setPageCountSuccess(res.data.pageCount));
-            dispatch(setSortPacks(sortPacks));
+            dispatch(setSortPacks(res.data.cardsPack));
             dispatch(setSearchPacks(res.data.name));
             localStorage.setItem('token', res.data.token);
         }).catch(error => {
