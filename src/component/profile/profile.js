@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect} from "react";
 import HeaderProfile from "./headerProfile";
-import {LOGIN_PATH} from "../routes";
+import {LOGIN_PATH, PROFILE_PATH} from "../routes";
+
+import { useDispatch, useSelector} from "react-redux";
+import {initialized, logout} from "../../redux/profileReducer";
 import {Redirect} from "react-router-dom";
-import {connect, useDispatch, useSelector} from "react-redux";
-import {initialized} from "../../redux/profileReducer";
-import {login} from "../../redux/loginRedux";
+
 
 
 const ProfilePage = (props)=>{
@@ -13,27 +14,29 @@ const ProfilePage = (props)=>{
         return store.profile
     });
 
-    useEffect(()=>{
-       dispatch(initialized())
+    useEffect(() => {
+        dispatch(initialized())
     }, []);
 
-    // const kkkk= useCallback( ()=>
-    // {
-    //
-    //     dispatch(ffff())
-    // }, [dispatch]);
 
+    const onClickLogaut = useCallback(() => {
+        debugger
+            dispatch(logout());
 
-     let token = localStorage.getItem('token');
-    // if(!token){
-    //     return <Redirect to={LOGIN_PATH} />
-    // }
+            return <Redirect to={LOGIN_PATH}/>
+        }, [dispatch]
+    );
+
+     if(!localStorage.getItem('token')){
+         return <Redirect to={LOGIN_PATH}/>
+     }
+
     return (
         <div>
-          <HeaderProfile name={name}/>
+            <HeaderProfile name={name}{...props} logout={onClickLogaut}/>
         </div>
     )
 };
 
 
-export default  ProfilePage
+export default ProfilePage

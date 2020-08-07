@@ -5,6 +5,9 @@ import thunk from "redux-thunk";
 import ForgotReducer from "./forgotReducer";
 import ProfileReducer from "./profileReducer";
 import SetNewPasswordReducer from "./setNewPassReducer";
+import PacksReducer from "./packsReducer";
+import CardsReducer from "./cardsReducer";
+
 
 
 const reducer = combineReducers({
@@ -12,8 +15,12 @@ const reducer = combineReducers({
     registration: RegistrationReducer,
     forgot: ForgotReducer,
     profile: ProfileReducer,
-    setNewPass: SetNewPasswordReducer
+    setNewPass: SetNewPasswordReducer,
+    packs:PacksReducer,
+    cards:CardsReducer
 });
 
+
 const store = createStore(reducer, applyMiddleware(thunk));
-export default store
+export default store;
+window.store=store;

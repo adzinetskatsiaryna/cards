@@ -1,25 +1,26 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {LOGIN_PATH} from "../routes";
 import {Redirect} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
-const HeaderProfile = (props)=>{
+const HeaderProfile = (props)=> {
 
-    const logaut = ()=>{
-        localStorage.setItem('token', JSON.stringify(null));
-       let token= localStorage.getItem('token');
-        if(token===null){
-        return <Redirect to={LOGIN_PATH}/>}
-    };
 
-    return(
+
+
+    return (
         <div>
             <h2>PROFILE</h2>
             <div>
                 <span>UserName</span>
                 <span>UserPhoto</span>
-                <span>{props.name}</span>
+                <div><span>User's name is : {props.name}</span>
+                </div>
             </div>
-            <button onClick={logaut}>logaut</button>
+            <button
+                onClick={props.logout}
+            >logaut
+            </button>
 
         </div>
     )

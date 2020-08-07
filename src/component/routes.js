@@ -5,12 +5,17 @@ import RegistrationPage from "./registration/registration";
 import ForgotPage from "./forgot/forgot";
 import ProfilePage from "./profile/profile";
 import SetNewPasswordPage from "./setNewPass/setNewPassWord";
+import PacksPage from "./pasc/PacksPage";
+import CardsPage from "./cards/CardsPage";
+
 
 export const LOGIN_PATH = '/login';
 export const REGISTRATION_PATH = '/registration';
 export const FORGOT_PATH = '/forgot';
 export const PROFILE_PATH = '/profile';
 export const SET_NEW_PASSWORD_PATH = '/setNewPassword';
+export const PACKS='/packs';
+export const CARDS='/cards';
 
 
 const Routes = (props)=>{
@@ -22,6 +27,9 @@ const Routes = (props)=>{
             <Route  path ={FORGOT_PATH} render={()=> <ForgotPage/>} />
             <Route  path ={PROFILE_PATH} render={()=> <ProfilePage/>} />
             <Route path ={SET_NEW_PASSWORD_PATH} render={()=> <SetNewPasswordPage/>} />
+            <Route path ={PACKS} render={()=> <PacksPage/>} />
+            <Route path={CARDS+'/:id'} render={()=><CardsPage/>}/>
+
         </div>
     )
 }
