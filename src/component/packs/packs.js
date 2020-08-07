@@ -4,7 +4,6 @@ import {
     deletePack,
     setCurrentPage,
     setPacks,
-    setPageCount,
     setPageCountSuccess, setSearchPacks, setSortPacks,
     updatePack
 } from "../../redux/packsReducer";
@@ -94,13 +93,13 @@ const PacksPage = (props) => {
         dispatch(setPacks())
     };
 
+    //поиск
     const onSearch = (sortName) => {
-        dispatch(setSearchPacks(sortName))
+        dispatch(setSearchPacks(sortName));
         dispatch(setPacks())
-    }
+    };
 
     return (
-
         <div>
             <Paginator
                 page={page}
