@@ -4,7 +4,8 @@ import {
     deletePack,
     setCurrentPage,
     setPacks,
-    setPageCountSuccess, setSortPacks,
+    setPageCount,
+    setPageCountSuccess, setSearchPacks, setSortPacks,
     updatePack
 } from "../../redux/packsReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -52,6 +53,7 @@ const PacksPage = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        debugger
         dispatch(setPacks())
     }, []);
 
@@ -61,7 +63,7 @@ const PacksPage = (props) => {
     });
 
     //сортировка
-    const { requestSort, sortConfig} = useSortableData(cardPacks);
+    const {items, requestSort, sortConfig} = useSortableData(cardPacks);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
@@ -110,9 +112,10 @@ const PacksPage = (props) => {
         dispatch(setPacks())
     };
 
-    // const onSearch = (sortName) => {
-    //     dispatch(setPacksSearch(sortName))
-    // }
+    const onSearch = (sortName) => {
+        dispatch(setSearchPacks(sortName))
+        dispatch(setPacks())
+    }
 
     return (
 
@@ -124,7 +127,7 @@ const PacksPage = (props) => {
                 onPageChanged={onPageChanged}
                 onPageChangedCount={onPageChangedCount}
             />
-            {/*<Search  onSearch={onSearch} />*/}
+            <Search  onSearch={onSearch} />
             <table>
                 <thead>
                 <tr>
