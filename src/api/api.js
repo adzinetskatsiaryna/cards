@@ -23,34 +23,33 @@ export const api = {
             html1: "<a href='http://localhost:3000/#/setNewPassword/",
             html2: "'>fdsfdsfdsf</a>"
         })
-
     },
     authMe(token){
-        return instance.post( `/auth/me`, {token:  token})
+        return instance.post( `/auth/me`, {token: token})
     },
 
+    //packs
 
-    getPacks(page,pageCount,token){
-
-        return instance.get(`cards/pack?page=${page}&pageCount=${pageCount}&token=${token}`);
+    getPacks(page, pageCount, token){
+        return instance.get(`/cards/pack?page=${page}&pageCount=${pageCount}&token=${token}`)
+    },
+    addPack(cardsPack, token){
+        return instance.post(`/cards/pack `, {cardsPack:cardsPack, token: token}).then(res=>res.data)
+    },
+    deletePack(token, id){
+        return instance.delete(`/cards/pack?token=${token}&id=${id}`).then(res=>res.data)
+    },
+    updatePack(cardsPack, obj, token){
+        return instance.put(`/cards/pack`, {cardsPack:{...cardsPack,...obj}, token: token}).then(res=>res.data)
     },
 
-    addPack(newCardsPack,token){
-        return instance.post(`cards/pack`,{cardsPack:newCardsPack,token:token}).then(res => res.data);
-    },
-    deletePack(id,token,){
-        return instance.delete(`cards/pack?token=${token}&id=${id}`).then(res => res.data)
-    },
-    updatePack(cardsPack,obj,token){
-        return instance.put(`cards/pack`,{cardsPack:{...cardsPack,...obj},token:token}).then(res=>res.data);
-    },
-    // API для cards
+    //cards
 
-    getCards( token,id){
-        return instance.get(`/cards/card?token=${token}&cardsPack_id=${id}`)
+    getCards(/*page, pageCount,*/ token, packId){
+        return instance.get(`/cards/card?token=${token}&cardsPack_id=${packId}`)
     },
-    addCard(newCard, token){
-        return instance.post(`/cards/card`,{card: newCard, token: token}).then(res=>res.data)
+    addCard(card, token){
+        return instance.post(`/cards/card`,{card: card, token: token}).then(res=>res.data)
     },
     deleteCard(token, id){
         return instance.delete(`/cards/card?token=${token}&id=${id}`).then(res=>res.data)

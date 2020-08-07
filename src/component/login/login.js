@@ -26,6 +26,7 @@ const LoginPage = (props)=>{
 
 
 
+
    if (isLoading){ return <Preloader/> }
     if(success){
         return <Redirect to={PROFILE_PATH}/>

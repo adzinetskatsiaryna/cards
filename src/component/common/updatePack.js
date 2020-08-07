@@ -2,20 +2,18 @@ import React, {useState} from "react";
 
 const UpdatePack = (props)=>{
 
-    const[name,setName]=useState("");
-    const[grade,setGrade]=useState(0)
 
+    const [name, setName] = useState('');
+    const [grade, setGrade]= useState(0);
     const onChangeName = (e)=>{
-        setName(e.currentTarget.value)
-        // props.onChangeNamePack(e.currentTarget.value)
+       setName(e.currentTarget.value)
     };
     const onChangeGrade = (e)=>{
         setGrade(e.currentTarget.value)
-        // props.onChangeGradePack(e.currentTarget.value)
     };
     const onButtonClick = ()=>{
-        props.onClick(props.pack,name,grade)
-    }
+        props.onClick(props.p,name, grade)
+    };
 
     return (
         <div>

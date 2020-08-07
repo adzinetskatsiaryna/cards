@@ -1,89 +1,82 @@
 import {api} from "../api/api";
 
-
 const initialState = {
     cardPacks: [],
-    cardPacksTotalCount:100,
-    minGrade:0,
-    maxGrade:5,
-    pageCount:10,
-    page:1,
-
+    cardPacksTotalCount: 100,
+    page: 1,
+    pageCount: 10,
+    maxGrade: 5,
+    minGrade: 0,
+    sortName: ''
 };
 
- const PacksReducer = (state=initialState, action)=>{
+const PacksReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'GET_PACKS_SUCCESS':
-        return{
-            ...state,
-            cardPacks: action.cardPacks
-        }
-
+        case 'SET_PACK_SUCCESS':
+            return {
+                ...state,
+                cardPacks: action.cardPacks
+            };
+        case 'SET_CURRENT_PAGE':
+            return {
+                ...state,
+                page: action.page
+            };
+        case 'SET_PAGE_COUNT':
+            return {
+                ...state,
+                pageCount: action.pageCount
+            };
         case  'SET_PACK_TOTAL_COUNT':
             return {
                 ...state,
                 cardPacksTotalCount: action.totalCount
-            }
-
-        case 'SET_CURRENT_PAGE':
+            };
+        case 'ADD_PACK_SUCCESS':
             return {
                 ...state,
-                page:action.page
-            }
-
-        case 'SET_PAGE_COUNT_SUCCESS':
+                cardPacks: [
+                    action.newCardsPack,
+                    ...state.cardPacks]
+            };
+        case 'DELETE_PACK_SUCCESS':
             return {
                 ...state,
-                pageCount: action.pageCount
-            }
-        case 'ADD_NEW_PACK':
-
+                cardPacks: state.cardPacks.filter(pack => pack._id !== action.packId)
+            };
+        case 'UPDATE_PACK_SUCCESS':
             return {
                 ...state,
-                cardPacks: [action.cardsPack,...state.cardPacks]
-            }
-        case 'DELETE_PACK':
-            return {
-                ...state,
-                cardPacks: state.cardPacks.filter(
-                   cardPacks=> cardPacks._id !== action.id
-                )
-            }
-        case 'UPDATE-PACK':
-            return {
-                ...state,
-                cardPacks: state.cardPacks.map(cardsPack=>{
-                    if(cardsPack._id !== action.id){
-                        return cardsPack
-                    }else{
+                cardPacks: state.cardPacks.map(pack => {
+                    if (pack._id !== action.packId) {
+                        return pack
+                    } else {
                         return {
-                            ...cardsPack,
-                           ...action.obj
+                            ...pack,
+                            ...action.obj
                         }
                     }
-                    }
+                })
+            };
 
-                )
-            }
-        case 'SET_COUNT_PACKS':
-            return {
-                ...state,
-                pageCount:action.count
-            }
-
-        default: return state
+        default:
+            return state
     }
-}
+};
 
-export const setPacksSuccess=(cardPacks)=>(
-    {
-     type:"GET_PACKS_SUCCESS",
-        cardPacks
-})
+export const setCurrentPage = (page) => ({
+    type: 'SET_CURRENT_PAGE',
+    page
+});
+export const setPageCountSuccess = (pageCount) => ({
+    type: 'SET_PAGE_COUNT',
+    pageCount
+});
 const setPackTotalCount = (totalCount) => ({
     type: 'SET_PACK_TOTAL_COUNT',
     totalCount
 });
+<<<<<<< HEAD
 export const setCurrentPage=(page)=>(
     {
      type:'SET_CURRENT_PAGE',
@@ -175,6 +168,39 @@ export const setPacks=(page)=>(dispatch,getState)=>{
 export const setPageCount = (pageCount) => (dispatch, getState) => {
     const token = localStorage.getItem('token');
     const page = getState().packs.page;
+=======
+
+const setPacksSuccess = (cardPacks) => (
+    {
+        type: 'SET_PACK_SUCCESS',
+        cardPacks
+    }
+);
+const addPackSuccess = (newCardsPack) => ({
+    type: 'ADD_PACK_SUCCESS',
+    newCardsPack
+});
+
+const deletePackSuccess = (packId) => (
+    {
+        type: 'DELETE_PACK_SUCCESS',
+        packId
+    }
+);
+
+const updatePackSuccess = (packId, obj) => ({
+    type: 'UPDATE_PACK_SUCCESS',
+    cardsPack_id: packId,
+    obj
+});
+
+
+
+
+export const setPacks = () => (dispatch, getState) => {
+    const token = localStorage.getItem('token');
+    const {pageCount, page} = getState().packs;
+>>>>>>> remotes/origin/master
     api.getPacks(page, pageCount, token)
         .then(res => {
             dispatch(setCurrentPage(page));
@@ -187,5 +213,38 @@ export const setPageCount = (pageCount) => (dispatch, getState) => {
     })
 };
 
+export const addPack = (newCardsPack) => (dispatch) => {
+    const token = localStorage.getItem('token');
+    api.addPack(newCardsPack, token).then(res => {
+        let cardsPack = res.newCardsPack;
+        dispatch(addPackSuccess(cardsPack));
+        localStorage.setItem('token', res.token);
+    }).catch(error => {
+        localStorage.setItem('token', error.response.data.token)
+    })
+};
+export const deletePack = (packId) => (dispatch) => {
+    const token = localStorage.getItem('token');
+    api.deletePack(token, packId).then(res => {
+        dispatch(deletePackSuccess(packId));
+        localStorage.setItem('token', res.token);
+    }).catch(error => {
+        localStorage.setItem('token', error.response.data.token)
+    })
+};
+export const updatePack = (cardsPack, obj) => (dispatch) => {
+    const token = localStorage.getItem('token');
+    api.updatePack(cardsPack, obj, token).then(res => {
+        dispatch(updatePackSuccess(cardsPack._id, obj));
+        localStorage.setItem('token', res.token);
+        dispatch(setPacks())
+    }).catch(error => {
+        localStorage.setItem('token', error.response.data.token)
+    })
+};
+// export const setPacksSearch = (name)=>(dispatch)=>{
+//     const token = localStorage.getItem('token');
+//     api.
+// };
 
-export default PacksReducer;
+export default PacksReducer

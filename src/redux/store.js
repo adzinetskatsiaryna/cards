@@ -9,17 +9,15 @@ import PacksReducer from "./packsReducer";
 import CardsReducer from "./cardsReducer";
 
 
-
 const reducer = combineReducers({
     login: LoginReducer,
     registration: RegistrationReducer,
     forgot: ForgotReducer,
     profile: ProfileReducer,
     setNewPass: SetNewPasswordReducer,
-    packs:PacksReducer,
-    cards:CardsReducer
+    packs: PacksReducer,
+    cards: CardsReducer
 });
-
 
 const store = createStore(reducer, applyMiddleware(thunk));
 export default store;

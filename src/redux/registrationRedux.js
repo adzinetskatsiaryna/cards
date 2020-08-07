@@ -30,7 +30,6 @@ const RegistrationReducer = (state=initialState, action)=>{
                ...state,
                isDisabled: action.isDisabled
            };
-           debugger
        case 'REGISTRATION_ERROR':
            return {
                ...state,

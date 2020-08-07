@@ -2,10 +2,8 @@ import React, {useCallback, useEffect} from "react";
 import HeaderProfile from "./headerProfile";
 import {LOGIN_PATH} from "../routes";
 import {Redirect} from "react-router-dom";
-import {connect, useDispatch, useSelector} from "react-redux";
-import {initialized} from "../../redux/profileReducer";
-import {login} from "../../redux/loginRedux";
-
+import { useDispatch, useSelector} from "react-redux";
+import {initialized, logaut} from "../../redux/profileReducer";
 
 const ProfilePage = (props)=>{
     const dispatch = useDispatch();
@@ -18,27 +16,20 @@ const ProfilePage = (props)=>{
        dispatch(initialized())
     }, []);
 
-    const logaut = ()=>{
-        localStorage.removeItem('rememberMe');
-        localStorage.removeItem('token');
-        return ''
-    };
-
-    // const kkkk= useCallback( ()=>
-    // {
-    //
-    //     dispatch(ffff())
-    // }, [dispatch]);
+     const onClickLogaut= useCallback( ()=>
+    {
+        dispatch(logaut());
+        return <Redirect to={LOGIN_PATH} />
+    }, [dispatch]);
 
 
-   let token = JSON.parse(localStorage.getItem('token'));
     if(!localStorage.getItem('token')){
         return <Redirect to={LOGIN_PATH} />
     }
 
     return (
         <div>
-          <HeaderProfile name={name} {...props} logaut={logaut}/>
+          <HeaderProfile name={name} {...props} logaut={onClickLogaut}/>
         </div>
     )
 };

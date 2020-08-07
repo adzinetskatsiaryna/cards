@@ -1,9 +1,7 @@
 import {api} from "../api/api";
-import {addPacksSuccess, deleteCardsPackSuccess, setPageCount} from "./packsReducer";
 
 const initialState = {
-    cards: [
-    ],
+    cards: [],
     cardsTotalCount: 3,
     maxGrade: 5,
     minGrade: 0,
@@ -15,97 +13,99 @@ const CardsReducer = (state=initialState, action)=>{
         case 'SET_CARDS_SUCCESS':
             return{
                 ...state,
-                cards:action.cards
-            }
-
-
+                cards: action.cards
+            };
+        // case 'ADD_CARD_SUCCESS':
+        //     return {
+        //         ...state,
+        //         cards: state.cards.map(card=>{
+        //             if(card.cardsPack._id !== action.packId){
+        //                 return card
+        //             }else {
+        //                 return {
+        //                     cards:[action.newCard, ...card]
+        //                 }
+        //             }
+        //         })
+        //     };
         case 'DELETE_CARD_SUCCESS':
             return {
                 ...state,
-                cards: state.cards.filter(
-                    card=> card._id !== action.cardId
-                )
-            }
+                cards: state.cards.filter(c=> c._id !== action.cardId)
+            };
+
         case 'UPDATE_CARD_SUCCESS':
-            return{
+            return {
                 ...state,
-                cards: state.cards.map(card=> {
+                cards: state.cards.map(card => {
                     if (card._id !== action.cardId) {
                         return card
                     } else {
                         return {
                             ...card,
-                            card: action.obj
+                            ...action.obj
                         }
                     }
                 })
-            }
-
-
+            };
         default: return state
     }
 };
 
-export const setCardsSuccess =(cards)=>({
-    type:'SET_CARDS_SUCCESS',
+const setCardsSuccess = (cards)=>({
+    type: 'SET_CARDS_SUCCESS',
     cards
-
-})
-
-
-export const deleteCardSuccess =(cardId)=>({
-    type:'DELETE_CARD_SUCCESS',
+});
+// const addCardSuccess = (newCard, packId)=>({
+//     type: 'ADD_CARD_SUCCESS',
+//     newCard,
+//     packId
+// });
+const deleteCardSuccess = (cardId)=>({
+    type: 'DELETE_CARD_SUCCESS',
     cardId
-})
-export const updateCardSuccess =(cardId,obj)=>({
-    type:'UPDATE_CARD_SUCCESS',
+});
+const updateCardSuccess = (cardId, obj)=>({
+    type: 'UPDATE_CARD_SUCCESS',
     cardId,
     obj
-})
+});
 
-// thunk
-
-export const setCards = (id) => (dispatch,getState) => {
+export const setCards = (packId)=>(dispatch)=>{
     const token = localStorage.getItem('token');
-    api.getCards(token,id)
-        .then(response => {
-            dispatch(setCardsSuccess(response.data.cards));
-            localStorage.setItem('token', response.data.token);
-        })
-        .catch(error => {
-            localStorage.setItem('token',  error.response.data.token);
-        });
-}
-export  const addCard=(newCard)=>(dispatch)=>{
-    const token = localStorage.getItem('token');
-    api.addCard(newCard,token)
-        .then(response=>{
-            localStorage.setItem('token', response.token);
-            dispatch(setCards(newCard.cardsPack_id));
-        }).catch(error=>{
-        localStorage.setItem('token',  error.response.data.token);
+        api.getCards(token, packId).then(res=>{
+        dispatch(setCardsSuccess(res.data.cards));
+        localStorage.setItem('token', res.data.token);
+    }).catch(error=>{
+        localStorage.setItem('token', error.response.data.token)
     })
-}
-
-export const  deleteCard=(cardId)=>(dispatch)=>{
+};
+export const addCard = (newCard)=>(dispatch)=>{
     const token = localStorage.getItem('token');
-    api.deleteCard(token,cardId)
-        .then(response=>{
-            dispatch(deleteCardSuccess(cardId));
-            localStorage.setItem('token',  response.token);
-        }).catch(error=>{
-        localStorage.setItem('token',  error.response.data.token);
+    api.addCard(newCard, token).then(res=>{
+        localStorage.setItem('token', res.token);
+        dispatch(setCards(newCard.cardsPack_id))
+    }).catch(error=>{
+        localStorage.setItem('token', error.response.data.token)
     })
-}
- export  const updateCard=(card,obj)=>(dispatch)=>{
-     const token = localStorage.getItem('token');
-     api.updateCard(card,token,obj).then(response=>{
-         localStorage.setItem('token',  response.token);
-         dispatch(setCards(card.cardsPack_id));
-     }).catch(error=>{
-         localStorage.setItem('token',  error.response.data.token);
-     })
- }
-
+};
+export const deleteCard = (cardId)=>(dispatch)=>{
+    const token = localStorage.getItem('token');
+    api.deleteCard(token, cardId).then(res=>{
+        dispatch(deleteCardSuccess(cardId));
+        localStorage.setItem('token', res.token);
+    }).catch(error=>{
+        localStorage.setItem('token', error.response.data.token)
+    })
+};
+export const updateCard = (card, obj)=>(dispatch)=>{
+    const token = localStorage.getItem('token');
+    api.updateCard(card,token,obj).then(res=>{
+        dispatch(updateCardSuccess(card._id, obj));
+        localStorage.setItem('token', res.token);
+    }).catch(error=>{
+        localStorage.setItem('token', error.response.data.token)
+    })
+};
 
 export default CardsReducer

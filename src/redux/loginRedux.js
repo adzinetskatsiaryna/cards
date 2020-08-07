@@ -30,12 +30,17 @@ const LoginReducer = (state=initialState, action)=>{
                ...state,
                error: action.value
            };
+       case'LOGIN_LOGAUT_SUCCESS':
+           return {
+           ...state,
+           success: false,
+       }
 
        default: return state
    }
 };
 
-const loginSuccess=()=>(
+export const loginSuccess=()=>(
     {
         type: 'LOGIN_SUCCESS',
     }
@@ -58,20 +63,20 @@ const loginError = (value) => ({
     value
 });
 
+export const loginLogautSuccess = ()=>({
+    type: 'LOGIN_LOGAUT_SUCCESS'
+})
 
 export const login = (email, password, rememberMe)=>(dispatch)=>{
     dispatch(disabled(true));
     dispatch(loading(true));
-    api.login(email, password, rememberMe).then(res=>{
-        if(res.success===true){
-            localStorage.setItem('token', JSON.stringify(res.token))
-        }
-
+    api.login(email, password, rememberMe).then(response=>{
+        localStorage.setItem('token', response.data.token);
         dispatch(loginSuccess());
         dispatch(disabled(false));
         dispatch(loading(false));
 
-    }).catch(error => {
+    }).catch((error) => {
        // console.log(error.response);
         if (error.response.status === 400) {
             dispatch(loginError(error.response.data.error));
