@@ -31,7 +31,7 @@ const CardsReducer = (state = initialState, action) => {
                     if (card._id !== action.cardId) {
                         return card
                     } else {
-                        // return action.obj/                        return {
+                       return {
                             ...card,
                             ...action.obj
                         }
