@@ -7,6 +7,7 @@ import ProfilePage from "./profile/profile";
 import SetNewPasswordPage from "./setNewPass/setNewPassWord";
 import PacksPage from "./packs/packs";
 import CardsPage from "./cards/cards";
+import LearnPage from "./learn/learnPage";
 
 export const LOGIN_PATH = '/login';
 export const REGISTRATION_PATH = '/registration';
@@ -15,6 +16,7 @@ export const PROFILE_PATH = '/profile';
 export const SET_NEW_PASSWORD_PATH = '/setNewPassword';
 export const PACKS = '/packs';
 export const CARDS = '/cards';
+export const LEARN = '/learnPage';
 
 
 
@@ -29,6 +31,7 @@ const Routes = (props)=>{
             <Route path ={SET_NEW_PASSWORD_PATH} render={()=> <SetNewPasswordPage/>} />
             <Route path ={PACKS} render={()=> <PacksPage/>} />
             <Route path ={CARDS+'/:id'} render={()=> <CardsPage/>} />
+            <Route path ={LEARN+'/:id'} render={()=> <LearnPage/>} />
         </div>
     )
 }

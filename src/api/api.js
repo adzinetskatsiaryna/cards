@@ -5,7 +5,7 @@ export const instance = axios.create({
 });
 export const api = {
     //login
-    login(email, password, rememberMe){
+    login(email, password, rememberMe) {
         return instance.post(`/auth/login`, {
             email: email,
             password: password,
@@ -14,15 +14,15 @@ export const api = {
     },
 
     //registration
-    registration(email, password){
-        return instance.post(`/auth/register` , {
+    registration(email, password) {
+        return instance.post(`/auth/register`, {
             email: email,
             password: password
         })
     },
 
     //forgot
-    forgot(email){
+    forgot(email) {
         return instance.post(`/auth/forgot`, {
             email: email,
             html1: "<a href='http://localhost:3000/#/setNewPassword/",
@@ -31,39 +31,48 @@ export const api = {
     },
 
     //authMe
-    authMe(token){
-        return instance.post( `/auth/me`, {token: token})
+    authMe(token) {
+        return instance.post(`/auth/me`, {token: token})
     },
 
     //packs
 
-    getPacks(page, pageCount, token, packName, sortPacks){
+    getPacks(page, pageCount, token, packName, sortPacks) {
         return instance.get(`/cards/pack?page=${page}&pageCount=${pageCount}&token=${token}&packName=${packName}&sortPacks=${sortPacks}`)
     },
-    addPack(cardsPack, token){
-        return instance.post(`/cards/pack `, {cardsPack:cardsPack, token: token}).then(res=>res.data)
+    addPack(cardsPack, token) {
+        return instance.post(`/cards/pack `, {cardsPack: cardsPack, token: token}).then(res => res.data)
     },
-    deletePack(token, id){
-        return instance.delete(`/cards/pack?token=${token}&id=${id}`).then(res=>res.data)
+    deletePack(token, id) {
+        return instance.delete(`/cards/pack?token=${token}&id=${id}`).then(res => res.data)
     },
-    updatePack(cardsPack, obj, token){
-        return instance.put(`/cards/pack`, {cardsPack:{...cardsPack,...obj}, token: token}).then(res=>res.data)
+    updatePack(cardsPack, obj, token) {
+        return instance.put(`/cards/pack`, {cardsPack: {...cardsPack, ...obj}, token: token}).then(res => res.data)
     },
 
     //cards
 
-    getCards(/*page, pageCount,*/ token, packId){
+    getCards(token, packId) {
         return instance.get(`/cards/card?token=${token}&cardsPack_id=${packId}`)
     },
-    addCard(card, token){
-        return instance.post(`/cards/card`,{card: card, token: token}).then(res=>res.data)
+    addCard(card, token) {
+        return instance.post(`/cards/card`, {card: card, token: token}).then(res => res.data)
     },
-    deleteCard(token, id){
-        return instance.delete(`/cards/card?token=${token}&id=${id}`).then(res=>res.data)
+    deleteCard(token, id) {
+        return instance.delete(`/cards/card?token=${token}&id=${id}`).then(res => res.data)
     },
-    updateCard(card, token,obj){
-        return instance.put(`/cards/card`,{card:{...card,...obj}, token:token}).then(res=>res.data)
+    updateCard(card, token, obj) {
+        return instance.put(`/cards/card`, {card: {...card, ...obj}, token: token}).then(res => res.data)
+    },
+    updateCardGrade(cardId, grade, token) {
+        return instance.put(`/cards/grade`, {card_id: cardId, grade: grade, token: token})
+            .then((res => {
+                debugger
+                return res.data
+            }))
+
     }
 };
+
 
 //page=${page}&pageCount=${pageCount}&

@@ -1,9 +1,17 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCard, deleteCard, setCards, updateCard} from "../../redux/cardsReducer";
+import {
+    addCard,
+    deleteCard,
+    setCards,
+    setCardsCountSuccess,
+    updateCard,
+    updateCardGrade
+} from "../../redux/cardsReducer";
 import {useParams} from "react-router";
 import UpdateCards from "../common/updateCards";
 import './cards.css'
+import UpdateCardsGrade from "../common/updateGrade";
 
 
 const CardsPage = (props) => {
@@ -19,7 +27,7 @@ const CardsPage = (props) => {
 //добавление карточки
     const onHandlerAddCard = useCallback(() => {
         let newCard = {
-            cardsPack_id: id
+            cardsPack_id: id,
         };
         dispatch(addCard(newCard))
     }, [dispatch]);
@@ -31,16 +39,34 @@ const CardsPage = (props) => {
 
     // изменение карточки
     const [update, setUpdate] = useState(false);
-    const activatedUpdate = () => {
+    const [updateGrade, setUpdateGrade] = useState(false);
+    const [selectedCard, setSelectedCard] = useState({});
+    const [selectedGrade, setSelectedGrade] = useState({});
+
+    const activatedUpdate = (card) => {
+        setSelectedCard(card)
         setUpdate(true)
     };
-    const onHandlerUpdateCard = useCallback((card, question, answer, grade) => {
-        dispatch(updateCard(card, {question: question, answer: answer, grade: grade}));
+    const activatedGradeUpdate = (card) => {
+        setSelectedGrade(card)
+        setUpdateGrade(true)
+    };
+    const onHandlerUpdateCard = useCallback((card, question, answer) => {
+        dispatch(updateCard(card, {question: question, answer: answer, grade: 1}));
         setUpdate(false)
     }, [dispatch]);
 
+    const onHandlerUpdateGrade = useCallback((card, grade) => {
+        debugger
+        dispatch(updateCardGrade(card._id, grade));
+        // dispatch(updateCard(card,{grade:grade}))
+        setUpdateGrade(false)
+    }, [dispatch]);
+
+
     return (
         <div>
+            <h1>Cards</h1>
             <table>
                 <thead>
                 <tr>
@@ -53,25 +79,28 @@ const CardsPage = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    {cards.map((card, i) => {
-                        return (<tr key={i}>
-                            <rd>{card.question}</rd>
-                            <rd>{card.answer}</rd>
-                            <rd>{card.grade}</rd>
-                            <rd>
-                                <button onClick={() => {
-                                    onHandlerDeleteCard(card._id)
-                                }}>delete
-                                </button>
-                            </rd>
-                            {!update && <rd>
-                                <button onClick={activatedUpdate}>update</button>
-                            </rd>}
-                            {update && <UpdateCards card={card} onClick={onHandlerUpdateCard}/>}
-                        </tr>)
-                    })}
-                </tr>
+                {cards.map((card, i) => {
+                    return (<tr
+                        key={i}>
+                        <td>{card.question}</td>
+                        <td>{card.answer}</td>
+                        {!updateGrade &&
+                        <td><span onClick={()=>activatedGradeUpdate(card)}>{card.grade}</span></td>}
+
+                        <td>
+                            <button onClick={() => {
+                                onHandlerDeleteCard(card._id)
+                            }}>delete
+                            </button>
+                        </td>
+                        {!update && <td>
+                            <button onClick={()=> activatedUpdate(card)} >update</button>
+                        </td>}
+
+                    </tr>)
+                })}
+                {updateGrade && <td><UpdateCardsGrade card={selectedGrade} onClick={onHandlerUpdateGrade}/></td>}
+                {update && <UpdateCards card={selectedCard} onClick={onHandlerUpdateCard}/>}
                 </tbody>
             </table>
         </div>

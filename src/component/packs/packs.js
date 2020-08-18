@@ -9,7 +9,7 @@ import {
 } from "../../redux/packsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
-import {CARDS} from "../routes";
+import {CARDS, LEARN} from "../routes";
 import Paginator from "../common/Paginator";
 import './pack.css'
 import UpdatePack from "../common/updatePack";
@@ -109,6 +109,7 @@ const PacksPage = (props) => {
                 onPageChangedCount={onPageChangedCount}
             />
             <Search  onSearch={onSearch} />
+
             <table>
                 <thead>
                 <tr>
@@ -151,7 +152,7 @@ const PacksPage = (props) => {
                             /> }
                         </td>
                         <td><NavLink to={CARDS+'/'+p._id}>cards</NavLink></td>
-                        <td><NavLink to={'/learn'}>learn</NavLink></td>
+                        <td><NavLink to={LEARN+'/'+p._id}>learn</NavLink></td>
                     </tr>)
                 })
                 }

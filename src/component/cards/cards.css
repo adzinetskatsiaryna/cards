@@ -36,3 +36,20 @@ tbody td {
     border: 1px solid #ccc;
     text-align: center;
 }
+.cards{
+    display: flex;
+    width: 800px;
+}
+.modal{
+    position: fixed;
+    top: calc(50vh - 100px);
+    left: calc(50vw - 150px);
+    width: 300px;
+    height: 200px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background: #64fff5;
+    z-index: 21;
+}
