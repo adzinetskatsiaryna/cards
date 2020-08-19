@@ -52,7 +52,7 @@ const CardsPage = (props) => {
         setUpdateGrade(true)
     };
     const onHandlerUpdateCard = useCallback((card, question, answer) => {
-        dispatch(updateCard(card, {question: question, answer: answer, grade: 1}));
+        dispatch(updateCard(card, {question: question, answer: answer}));
         setUpdate(false)
     }, [dispatch]);
 

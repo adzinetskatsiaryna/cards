@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import {CARDS, FORGOT_PATH, LOGIN_PATH, PACKS, PROFILE_PATH, REGISTRATION_PATH, SET_NEW_PASSWORD_PATH} from "../routes";
-import style from './header.module.css'
+import s from './header.module.css'
 
 const Header = (props) => {
     const [isShow, setShow] = useState(false);
@@ -14,8 +14,8 @@ const Header = (props) => {
 
 
     return (
-        <div >
-            {!isShow && <div className={style.headerWrapper}>
+        <div  >
+            {!isShow && <div className={s.headerWrapper}>
                 <NavLink to={LOGIN_PATH}>LOGIN</NavLink>
                 <NavLink to={REGISTRATION_PATH}>REGISTRATION</NavLink>
                 <NavLink to={FORGOT_PATH}>FORGOT</NavLink>

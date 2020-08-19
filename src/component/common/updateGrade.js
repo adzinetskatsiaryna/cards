@@ -10,7 +10,7 @@ const UpdateCardsGrade = (props) => {
     }
 
     const onGradeClick = () => {
-        debugger
+
         props.onClick(props.card, grade)
     };
 

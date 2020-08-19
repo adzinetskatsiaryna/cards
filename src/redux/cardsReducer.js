@@ -24,7 +24,7 @@ const CardsReducer = (state = initialState, action) => {
             };
 
         case 'UPDATE_CARD_SUCCESS':
-            debugger
+
             return {
                 ...state,
                 cards: state.cards.map(card => {
@@ -111,7 +111,7 @@ export const updateCard = (card, obj) => (dispatch) => {
     })
 };
 export const updateCardGrade = (cardId, grade) => (dispatch) => {
-    debugger
+
     const token = localStorage.getItem('token');
     api.updateCardGrade(cardId, grade, token)
         .then(res => {

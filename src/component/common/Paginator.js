@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styles from './paginator.module.css'
 
-const Paginator = ({portionSize = 20, totalItemsCount, pageSize, page, onPageChanged, onPageChangedCount, ...props}) => {
+const Paginator = ({portionSize = 5, totalItemsCount, pageSize, page, onPageChanged, onPageChangedCount, ...props}) => {
 
     let pagesCount = Math.ceil(totalItemsCount / pageSize);
     let pages = [];
@@ -27,6 +27,7 @@ const Paginator = ({portionSize = 20, totalItemsCount, pageSize, page, onPageCha
     return (
         <div>
             <div>
+                <span>choose the number of packs on page: </span>
                 <select onChange={onChangeCountPacks} value={pageSize}>
                     {option}
                 </select>
@@ -36,7 +37,7 @@ const Paginator = ({portionSize = 20, totalItemsCount, pageSize, page, onPageCha
                 {portionNumber > 1 &&
                 <button onClick={() => {
                     setPortionNumber(portionNumber - 1)
-                }}>PREV</button>
+                }}>«</button>
                 }
                 {pages
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
@@ -51,7 +52,7 @@ const Paginator = ({portionSize = 20, totalItemsCount, pageSize, page, onPageCha
                 {portionCount > portionNumber &&
                 <button onClick={() => {
                     setPortionNumber(portionNumber + 1)
-                }}>NEXT</button>
+                }}>»</button>
                 }
             </div>
         </div>)

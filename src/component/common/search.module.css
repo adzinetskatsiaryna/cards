@@ -1,0 +1,31 @@
+
+
+.box{
+     width: 100px;
+    height:  50px;
+     vertical-align: middle;
+     white-space: nowrap;
+
+ }
+
+.box input {
+    font-size: 10pt;
+    height: 26px;
+    padding-left: 15px;
+    margin-left: 10px;
+
+}
+ .icon:focus {
+outline: none;
+}
+.box .icon:hover{
+    color: #12492e;
+    -webkit-transform:scale(1.5); /* Safari and Chrome */
+    -moz-transform:scale(1.4); /* Firefox */
+    -ms-transform:scale(1.4); /* IE 9 */
+    -o-transform:scale(1.4); /* Opera */
+    transform:scale(1.4);
+}
+
+
+
