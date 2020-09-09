@@ -9,11 +9,36 @@ const [sortName, setSortName]=useState('');
     const onClickButton = ()=>{
         onSearch(sortName)
     };
+const [minValue, setMinValue]= useState(0);
+const [maxValue, setMaxValue]=useState(5);
+const onChangeMinValue = (e)=>{
+    if(maxValue<=5){
+        setMaxValue(e.currentTarget.value)
+    }
+};
+
+const onChangeMaxValue = (e)=>{
+    if(maxValue<=5){
+        setMinValue(e.currentTarget.value)
+    }
+}
 
     return (
         <div>
-            <input type='text' value={sortName} onChange={onChangeValue} />
-            <button onClick={onClickButton}>search</button>
+            <div>
+                <input type='text' value={sortName} onChange={onChangeValue}/>
+                <button onClick={onClickButton}>search</button>
+            </div>
+            <div>
+                <div>
+                    <span>min Value:</span>
+                    <input type='number' value={maxValue} onChange={onChangeMinValue}/>
+                </div>
+                <div>
+                    <span>max Value:</span>
+                    <input type='number' value={minValue} onChange={onChangeMaxValue}/>
+                </div>
+            </div>
         </div>
     )
 };

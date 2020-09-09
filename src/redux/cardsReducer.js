@@ -15,19 +15,7 @@ const CardsReducer = (state=initialState, action)=>{
                 ...state,
                 cards: action.cards
             };
-        // case 'ADD_CARD_SUCCESS':
-        //     return {
-        //         ...state,
-        //         cards: state.cards.map(card=>{
-        //             if(card.cardsPack._id !== action.packId){
-        //                 return card
-        //             }else {
-        //                 return {
-        //                     cards:[action.newCard, ...card]
-        //                 }
-        //             }
-        //         })
-        //     };
+
         case 'DELETE_CARD_SUCCESS':
             return {
                 ...state,
@@ -56,11 +44,7 @@ const setCardsSuccess = (cards)=>({
     type: 'SET_CARDS_SUCCESS',
     cards
 });
-// const addCardSuccess = (newCard, packId)=>({
-//     type: 'ADD_CARD_SUCCESS',
-//     newCard,
-//     packId
-// });
+
 const deleteCardSuccess = (cardId)=>({
     type: 'DELETE_CARD_SUCCESS',
     cardId

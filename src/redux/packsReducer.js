@@ -69,7 +69,7 @@ const PacksReducer = (state = initialState, action) => {
             return {
                 ...state,
                 sortName: action.sortName
-            }
+            };
         default:
             return state
     }
@@ -167,9 +167,6 @@ export const updatePack = (cardsPack, obj) => (dispatch) => {
         localStorage.setItem('token', error.response.data.token)
     })
 };
-// export const setPacksSearch = (name)=>(dispatch)=>{
-//     const token = localStorage.getItem('token');
-//     api.
-// };
+
 
 export default PacksReducer
