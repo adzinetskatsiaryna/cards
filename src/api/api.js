@@ -40,8 +40,12 @@ export const api = {
     getPacks(page, pageCount, token, packName, sortPacks) {
         return instance.get(`/cards/pack?page=${page}&pageCount=${pageCount}&token=${token}&packName=${packName}&sortPacks=${sortPacks}`)
     },
-    addPack(cardsPack, token) {
-        return instance.post(`/cards/pack `, {cardsPack: cardsPack, token: token}).then(res => res.data)
+    // addPack(cardsPack, token) {
+    //     return instance.post(`/cards/pack `, {cardsPack: cardsPack, token: token}).then(res => res.data)
+    // },
+    addPack(cardsPackName, token) {
+        debugger;
+        return instance.post(`/cards/pack `, {name: cardsPackName, token: token}).then(res => res.data)
     },
     deletePack(token, id) {
         return instance.delete(`/cards/pack?token=${token}&id=${id}`).then(res => res.data)
@@ -67,7 +71,6 @@ export const api = {
     updateCardGrade(cardId, grade, token) {
         return instance.put(`/cards/grade`, {card_id: cardId, grade: grade, token: token})
             .then((res => {
-                debugger
                 return res.data
             }))
 
@@ -75,4 +78,3 @@ export const api = {
 };
 
 
-//page=${page}&pageCount=${pageCount}&

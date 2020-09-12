@@ -138,9 +138,19 @@ export const setPacks = () => (dispatch, getState) => {
     })
 };
 
-export const addPack = (newCardsPack) => (dispatch) => {
+// export const addPack = (newCardsPack) => (dispatch) => {
+//     const token = localStorage.getItem('token');
+//     api.addPack(newCardsPack, token).then(res => {
+//         let cardsPack = res.newCardsPack;
+//         dispatch(addPackSuccess(cardsPack));
+//         localStorage.setItem('token', res.token);
+//     }).catch(error => {
+//         localStorage.setItem('token', error.response.data.token)
+//     })
+// };
+export const addPack = (cardsPackName) => (dispatch) => {
     const token = localStorage.getItem('token');
-    api.addPack(newCardsPack, token).then(res => {
+    api.addPack(cardsPackName, token).then(res => {
         let cardsPack = res.newCardsPack;
         dispatch(addPackSuccess(cardsPack));
         localStorage.setItem('token', res.token);
@@ -149,8 +159,10 @@ export const addPack = (newCardsPack) => (dispatch) => {
     })
 };
 export const deletePack = (packId) => (dispatch) => {
+    debugger
     const token = localStorage.getItem('token');
     api.deletePack(token, packId).then(res => {
+        debugger
         dispatch(deletePackSuccess(packId));
         localStorage.setItem('token', res.token);
     }).catch(error => {

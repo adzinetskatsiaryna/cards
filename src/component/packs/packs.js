@@ -14,6 +14,7 @@ import Paginator from "../common/Paginator";
 import './pack.css'
 import UpdatePack from "../common/updatePack";
 import Search from "../common/search";
+import {AddPack} from "./addPack";
 
 const useSortableData = (config = null) => {
     const [sortConfig, setSortConfig] = React.useState(config);
@@ -60,8 +61,13 @@ const PacksPage = (props) => {
     };
 
     // добавление колоды
-    const onHandlerAddPack = useCallback((cardsPack) => {
-        dispatch(addPack(cardsPack))
+    // const onHandlerAddPack = useCallback((cardsPack) => {
+    //     dispatch(addPack(cardsPack))
+    // }, [dispatch]);
+    const [isActiveInput,setIsActiveInput]=useState(false);
+
+    const onHandlerAddPack = useCallback((cardsPackName) => {
+        dispatch(addPack(cardsPackName))
     }, [dispatch]);
 
     // удаление колоды
@@ -132,7 +138,9 @@ const PacksPage = (props) => {
                         </button>
                     </th>
                     <th>
-                        <button onClick={onHandlerAddPack}>Add pack</button>
+                        {/*<button onClick={onHandlerAddPack}>Add pack</button>*/}
+                        {!isActiveInput && <button onClick={setIsActiveInput}>Add pack</button> }
+                        {isActiveInput && <AddPack onHandlerAddPack={onHandlerAddPack} />}
                     </th>
                 </tr>
                 </thead>
