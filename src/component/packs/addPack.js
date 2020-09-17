@@ -8,7 +8,7 @@ export const AddPack=(props)=>{
     const onChangeValue=(e)=>{
         setName(e.currentTarget.value);
     }
-    const onAddPackName=(name)=>{
+    const onAddPackName=()=>{
  props.onHandlerAddPack(name)
     }
 

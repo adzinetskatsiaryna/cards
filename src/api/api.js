@@ -1,7 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
+
+export const baseURL='https://neko-back.herokuapp.com/2.0';
 
 export const instance = axios.create({
-    baseURL: `http://localhost:7542/1.0`
+    baseURL,
+    withCredentials:true,
 });
 export const api = {
     //login
@@ -12,6 +15,9 @@ export const api = {
             rememberMe: rememberMe
         })
     },
+    logautMe(){
+        return instance.delete(`/auth/me`,{});
+      },
 
     //registration
     registration(email, password) {
@@ -25,8 +31,20 @@ export const api = {
     forgot(email) {
         return instance.post(`/auth/forgot`, {
             email: email,
-            html1: "<a href='http://localhost:3000/#/setNewPassword/",
-            html2: "'>fdsfdsfdsf</a>"
+            from:'<mahanasty@mail.ru>',
+            message:`<div style="background-color: lime; padding: 15px">
+                     password recovery link: 
+                    <a href='http://localhost:3000/#/setNewPassword/$token$'>
+                    link</a></div>`
+         // html1: "<a href='http://localhost:3000/#/setNewPassword/",
+        // html2: "'>fdsfdsfdsf</a>"
+        })
+    },
+
+    setNewPassword(newPassword,token){
+        return instance.post(`/auth/set-new-password`,{
+            password:newPassword,
+            resetPasswordToken:token
         })
     },
 
@@ -44,8 +62,7 @@ export const api = {
     //     return instance.post(`/cards/pack `, {cardsPack: cardsPack, token: token}).then(res => res.data)
     // },
     addPack(cardsPackName, token) {
-        debugger;
-        return instance.post(`/cards/pack `, {name: cardsPackName, token: token}).then(res => res.data)
+        return instance.post(`/cards/pack `, {cardsPack:{name: cardsPackName}, token: token}).then(res => res.data)
     },
     deletePack(token, id) {
         return instance.delete(`/cards/pack?token=${token}&id=${id}`).then(res => res.data)
@@ -73,8 +90,49 @@ export const api = {
             .then((res => {
                 return res.data
             }))
-
+    },
+    sendFile(avatar){
+        return  instance.put(`/auth/me`,{avatar:avatar})
     }
 };
+
+export const getFile = (baseURL, fileName) => {
+    // запросить файл
+    axios.get(baseURL, {responseType: 'blob'}) // !!! responseType: 'blob'
+        .then(({data}) => {
+            const blob = new Blob([data], {type : 'image/jpeg'});
+            console.log(blob)
+
+            // создать ссылку на файл
+            const downloadUrl = window.URL.createObjectURL(blob);
+
+            // создать тег "ссылка" на наш файл
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+
+            // добавить атрибуты нашему тегу: загрузочный, имя файла
+            link.setAttribute('download', fileName);
+
+            // добавить тег в документ
+            document.body.appendChild(link);
+
+            // нажать на ссылку
+            link.click();
+
+            // удалить тег из документа
+            link.remove();
+        });
+};
+//
+export const writeFile = (fileName, value) => {
+    const link = document.createElement("a");
+    link.href = "data:text/plain;content-disposition=attachment;filename=file," + value;
+    link.download = fileName;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
 
 

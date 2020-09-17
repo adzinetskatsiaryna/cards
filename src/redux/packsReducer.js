@@ -159,10 +159,10 @@ export const addPack = (cardsPackName) => (dispatch) => {
     })
 };
 export const deletePack = (packId) => (dispatch) => {
-    debugger
+
     const token = localStorage.getItem('token');
     api.deletePack(token, packId).then(res => {
-        debugger
+
         dispatch(deletePackSuccess(packId));
         localStorage.setItem('token', res.token);
     }).catch(error => {

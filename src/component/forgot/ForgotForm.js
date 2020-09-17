@@ -2,6 +2,7 @@ import React, {useState} from "react";
 
 const ForgotForm = (props) => {
     const [email, setEmail]=useState('');
+    const [emailNew,setEmailNew]=useState('')
 
     const changeForgotEmail = (e)=>{
         setEmail(e.currentTarget.value)

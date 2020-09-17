@@ -9,7 +9,11 @@ const HeaderProfile = (props)=>{
             <div>
                 <div>UserName - </div>
                 <span>{props.name}</span>
-                <div>UserPhoto</div>
+
+                {/* eslint-disable-next-line no-undef */}
+                <div>User photo:
+                    <img src={props.avatar}/>
+                    </div>
 
             </div>
             <button onClick={props.logaut}>logaut</button>

@@ -15,6 +15,7 @@ import './pack.css'
 import UpdatePack from "../common/updatePack";
 import Search from "../common/search";
 import {AddPack} from "./addPack";
+import AddFile from "../common/AddFile";
 
 const useSortableData = (config = null) => {
     const [sortConfig, setSortConfig] = React.useState(config);
@@ -116,6 +117,7 @@ const PacksPage = (props) => {
             />
             <Search  onSearch={onSearch} />
 
+
             <table>
                 <thead>
                 <tr>
@@ -148,7 +150,7 @@ const PacksPage = (props) => {
                 {cardPacks.map((p, i) => {
                     return (<tr key={p._id} id={p._id}>
                         <td>{p.name}</td>
-                        <td>{p.grade}</td>
+                        <td>{p.cardsCount}</td>
                         <td>
                             <button onClick={() => onHandlerDeletePack(p._id)}>del</button>
                         </td>

@@ -5,6 +5,7 @@ import {NavLink, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {forgotPassword, forgotSuccess} from "../../redux/forgotReducer";
 import Preloader from "../common/preloader";
+import s from './forgot.module.css';
 
 const ForgotPage = (props)=>{
 
@@ -18,10 +19,16 @@ const ForgotPage = (props)=>{
         return <Preloader/>
     }
 
+    {
+        if (props.success) {
+            return <div className={s.modal}>Follow  the link on your e-mail page </div>
+        }
+    }
+
     return (
         <div>
             <h2>FORGOT</h2>
-            {props.success ? <Redirect to={SET_NEW_PASSWORD_PATH}/> : null}
+
             <ForgotForm onSubmitForgot={onSubmitForgot} disabled={props.isDisabled} />
             <NavLink to={LOGIN_PATH}>Login</NavLink>
             <div>{props.error}</div>
